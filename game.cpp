@@ -8,6 +8,8 @@ Game::Game()
     {
         field[row] = new int[field_size];
     }
+
+    ui.display_field(field, field_size);
 }
 
 Game::~Game()
