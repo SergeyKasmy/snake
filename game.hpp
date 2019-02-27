@@ -10,6 +10,7 @@ class Game
         UI ui;
 
         void tick();
+        void update();
     public:
         Game();
         ~Game();

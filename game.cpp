@@ -1,5 +1,4 @@
 #include <chrono>
-#include <cstdio>
 #include "game.hpp"
 
 void Game::tick()
@@ -11,11 +10,15 @@ void Game::tick()
     {
         if((last_tick + TICK_DURATION) < std::chrono::high_resolution_clock::now())
         {
-            // TODO: IMPLEMENT
-
+            update();
             last_tick += TICK_DURATION;
         }
     }
+}
+
+void Game::update()
+{
+    ui.display_field(field, field_size);
 }
 
 Game::Game()
@@ -26,7 +29,7 @@ Game::Game()
         field[row] = new int[field_size];
     }
 
-    ui.display_field(field, field_size);
+    tick();
 }
 
 Game::~Game()

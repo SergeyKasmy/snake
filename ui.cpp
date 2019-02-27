@@ -17,6 +17,8 @@ UI::~UI()
 
 void UI::display_field(int** field, int field_size)
 {
+    move(0, 0);
+
     for(int row = 0; row < field_size; row++)
     {
         for(int column = 0; column < field_size; column++)
@@ -24,7 +26,7 @@ void UI::display_field(int** field, int field_size)
             printw("%d", field[row][column]);
         }
         
-        printw("\n");
+        move(row, 0);
     }
 
     refresh();
