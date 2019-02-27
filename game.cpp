@@ -1,4 +1,5 @@
 #include <chrono>
+#include <random>
 #include "game.hpp"
 
 void Game::tick()
@@ -18,6 +19,15 @@ void Game::tick()
 
 void Game::update()
 {
+    // pseudo-random number generator
+    std::mt19937 rng;
+    // generate a seed from a random device in the system
+    rng.seed(std::random_device()());
+    // make a class to distribute the random numbers
+    std::uniform_int_distribution<std::mt19937::result_type> dist(0, field_size - 1);
+
+    field[dist(rng)][dist(rng)] = 1;
+
     ui.display_field(field, field_size);
 }
 
