@@ -31,8 +31,9 @@ void Game::update()
     ui.display_field(field, field_size);
 }
 
-Game::Game()
+Game::Game(int pField_size)
 {
+    field_size = pField_size;
     field = new int*[field_size];
     for(int row = 0; row < field_size; row++)
     {

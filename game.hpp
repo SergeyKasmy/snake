@@ -5,7 +5,7 @@
 class Game
 {
     private:
-        int field_size = 15;
+        int field_size;
         int** field;
         UI ui;
 
@@ -18,6 +18,6 @@ class Game
         void tick();
         void update();
     public:
-        Game();
+        Game(int pField_size = 15);
         ~Game();
 };
