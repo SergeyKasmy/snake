@@ -9,6 +9,12 @@ class Game
         int** field;
         UI ui;
 
+        struct point
+        {
+            int y;
+            int x;
+        };
+
         void tick();
         void update();
     public:
