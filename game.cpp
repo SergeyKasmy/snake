@@ -1,8 +1,7 @@
 #include <cstdio>
 #include "game.hpp"
 
-int main()
+Game::Game()
 {
-    Game obj;
-    return 0;
+    printf("Hello World");
 }
