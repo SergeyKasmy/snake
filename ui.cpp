@@ -1,5 +1,19 @@
-#include <iostream>
+#include <ncurses.h>
 #include "ui.hpp"
+
+UI::UI()
+{
+    initscr();
+    cbreak();
+    noecho();
+    keypad(stdscr, true);
+}
+
+UI::~UI()
+{
+    getch();
+    endwin();
+}
 
 void UI::display_field(int** field, int field_size)
 {
@@ -7,10 +21,11 @@ void UI::display_field(int** field, int field_size)
     {
         for(int column = 0; column < field_size; column++)
         {
-            std::cout << field[row][column];
+            printw("%d", field[row][column]);
         }
         
-        std::cout << std::endl;
+        printw("\n");
     }
-    
+
+    refresh();
 }
