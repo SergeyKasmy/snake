@@ -1,5 +1,22 @@
+#include <chrono>
 #include <cstdio>
 #include "game.hpp"
+
+void Game::tick()
+{
+    const static std::chrono::seconds TICK_DURATION(1);
+    auto last_tick = std::chrono::high_resolution_clock::now();
+
+    while(true)
+    {
+        if((last_tick + TICK_DURATION) < std::chrono::high_resolution_clock::now())
+        {
+            // TODO: IMPLEMENT
+
+            last_tick += TICK_DURATION;
+        }
+    }
+}
 
 Game::Game()
 {
