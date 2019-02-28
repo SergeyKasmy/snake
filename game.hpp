@@ -1,19 +1,13 @@
 #pragma once
 
+#include "field.hpp"
 #include "ui.hpp"
 
 class Game
 {
     private:
-        int field_size;
-        int** field;
         UI ui;
-
-        struct point
-        {
-            int y;
-            int x;
-        };
+        Field* field;
 
         void tick();
         void update();
