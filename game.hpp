@@ -2,12 +2,14 @@
 
 #include "field.hpp"
 #include "ui.hpp"
+#include "player.hpp"
 
 class Game
 {
     private:
         UI ui;
         Field *field;
+        Player *player;
 
         void tick();
         void update();

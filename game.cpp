@@ -2,6 +2,8 @@
 #include <random>
 #include "game.hpp"
 
+#include <ncurses.h>
+
 void Game::tick()
 {
     const static std::chrono::seconds TICK_DURATION(1);
@@ -30,17 +32,20 @@ void Game::update()
 
     field->set({(int) dist(rng), (int) dist(rng)}, 1);
     */
-   
+
     ui.display_field(field);
+    player->move();
 }
 
 Game::Game(int pField_size)
 {
     field = new Field(pField_size);
+    player = new Player();
     tick();
 }
 
 Game::~Game()
 {
     delete field;
+    delete player;
 }
