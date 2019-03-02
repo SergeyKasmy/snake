@@ -15,7 +15,7 @@ UI::~UI()
     endwin();
 }
 
-void UI::display_field(Field *field)
+void UI::display_field(Field *field, Player *player)
 {
     move(0, 0);
 
@@ -28,6 +28,7 @@ void UI::display_field(Field *field)
         
         move(row+1, 0);
     }
-
-   refresh();
+    
+    mvaddch(player->get().y, player->get().x, '2');
+    refresh();
 }

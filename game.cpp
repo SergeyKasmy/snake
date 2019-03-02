@@ -33,8 +33,8 @@ void Game::update()
     field->set({(int) dist(rng), (int) dist(rng)}, 1);
     */
 
-    ui.display_field(field);
-    player->move();
+    player->move();  
+    ui.display_field(field, player);
 }
 
 Game::Game(int pField_size)
