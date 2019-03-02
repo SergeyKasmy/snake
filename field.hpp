@@ -8,9 +8,14 @@ struct point
 
 class Field
 {
+    private:
+        int **field;
     public:
-        int field_size;
-        int** field;
         Field(int pField_size);
         ~Field();
+        const int field_size;
+
+        // TODO: implement value checking in set()
+        int get(point pPoint) const {    return field[pPoint.y][pPoint.x]; }
+        void set(point pPoint, int value) {  field[pPoint.y][pPoint.x] = value;    }
 };

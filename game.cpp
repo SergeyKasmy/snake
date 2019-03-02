@@ -26,9 +26,8 @@ void Game::update()
     // make a class to distribute the random numbers
     std::uniform_int_distribution<std::mt19937::result_type> dist(0, field->field_size - 1);
 
-    field->field[dist(rng)][dist(rng)] = 1;
-
-    ui.display_field(field->field, field->field_size);
+    field->set({(int) dist(rng), (int) dist(rng)}, 1);
+    ui.display_field(field);
 }
 
 Game::Game(int pField_size)

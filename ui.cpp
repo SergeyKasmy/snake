@@ -15,19 +15,19 @@ UI::~UI()
     endwin();
 }
 
-void UI::display_field(int** field, int field_size)
+void UI::display_field(Field *field)
 {
     move(0, 0);
 
-    for(int row = 0; row < field_size; row++)
+    for(int row = 0; row < field->field_size; row++)
     {
-        for(int column = 0; column < field_size; column++)
+        for(int column = 0; column < field->field_size; column++)
         {
-            printw("%d", field[row][column]);
+            printw("%d", field->get({row, column}));
         }
         
-        move(row, 0);
+        move(row+1, 0);
     }
 
-    refresh();
+   refresh();
 }

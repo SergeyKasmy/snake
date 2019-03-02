@@ -7,7 +7,7 @@ class Game
 {
     private:
         UI ui;
-        Field* field;
+        Field *field;
 
         void tick();
         void update();
