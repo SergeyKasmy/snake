@@ -34,6 +34,7 @@ void Game::update()
             break;
         }
         case Object::wall:
+        case Object::player:
         {
             throw GameEnded();
             break;
