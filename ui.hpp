@@ -9,4 +9,5 @@ class UI
         UI();
         ~UI();
         void display_field(Field *field, Player *player);
+        Facing get_input();
 };

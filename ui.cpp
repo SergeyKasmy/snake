@@ -6,6 +6,7 @@ UI::UI()
     initscr();
     cbreak();
     noecho();
+    nodelay(stdscr, true);
     keypad(stdscr, true);
 }
 
@@ -31,4 +32,22 @@ void UI::display_field(Field *field, Player *player)
     
     mvaddch(player->get().y, player->get().x, '2');
     refresh();
+}
+
+Facing UI::get_input()
+{
+    int input = getch();
+    switch (input)
+    {
+        case KEY_UP:
+            return Facing::up;
+        case KEY_RIGHT:
+            return Facing::right;
+        case KEY_DOWN:
+            return Facing::down;
+        case KEY_LEFT:
+            return Facing::left;
+    }
+
+    return Facing::null;
 }

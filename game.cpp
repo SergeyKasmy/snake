@@ -8,6 +8,7 @@ void Game::tick()
 {
     const static std::chrono::seconds TICK_DURATION(1);
     auto last_tick = std::chrono::high_resolution_clock::now();
+    Facing input;
 
     while(true)
     {
@@ -17,6 +18,9 @@ void Game::tick()
             update();
             last_tick += TICK_DURATION;
         }
+
+
+        if((input = ui.get_input()) != Facing::null) player->facing = input;
     }
 }
 
