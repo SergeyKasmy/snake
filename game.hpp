@@ -10,9 +10,11 @@ class Game
         UI ui;
         Field *field;
         Player *player;
+        point food;
 
         void tick();
         void update();
+        void place_food();
     public:
         Game(int pField_size = 15);
         ~Game();

@@ -26,23 +26,36 @@ void Game::tick()
 
 void Game::update()
 {
+    player->move();
+    
+    if(player->get() == food)
+    {
+        field->set(food, Object::empty);
+        place_food();
+    }
+    
+    ui.display(field, player);
+}
+
+void Game::place_food()
+{
     // pseudo-random number generator
-    std::mt19937 rng;
+    static std::mt19937 rng;
     // generate a seed from a random device in the system
     rng.seed(std::random_device()());
     // make a class to distribute the random numbers
-    std::uniform_int_distribution<std::mt19937::result_type> dist(0, field->field_size - 1);
+    static std::uniform_int_distribution<std::mt19937::result_type> dist(0, field->field_size - 1);
 
-    field->set({(int) dist(rng), (int) dist(rng)}, FieldObject::food);
-
-    player->move();  
-    ui.display(field, player);
+    food = {(int) dist(rng), (int) dist(rng)};
+    field->set(food, Object::food);
 }
 
 Game::Game(int pField_size)
 {
     field = new Field(pField_size);
     player = new Player();
+
+    place_food();
     tick();
 }
 

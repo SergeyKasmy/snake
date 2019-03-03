@@ -6,6 +6,12 @@ struct point
     int x;
 };
 
+inline bool operator==(const point& left, const point& right)
+{
+    return left.y == right.y &&
+           left.x == right.x;
+}
+
 enum class Object { empty, food };
 
 class Field
