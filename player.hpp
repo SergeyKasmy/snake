@@ -8,7 +8,7 @@ enum class Facing { right, down, left, up, null};
 class Player
 {
     private:
-        std::vector<point> position {{0, 1}};
+        std::vector<point> position {{5, 5}};
         unsigned int length = 1;
     public:
         Facing facing = Facing::right;

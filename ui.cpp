@@ -33,6 +33,9 @@ void UI::display(Field *field, Player *player)
                 case Object::food:
                     mvaddch(row, column, 'f');
                     break;
+                case Object::wall:
+                    mvaddch(row, column, 'w');
+                    break;
             }
         }
         

@@ -1,5 +1,6 @@
 #include <chrono>
 #include <random>
+#include <stdexcept>
 #include "game.hpp"
 
 #include <ncurses.h>
@@ -27,11 +28,22 @@ void Game::tick()
 void Game::update()
 {
     point player_head = player->get();
-    if(field->get(player_head) == Object::food)
+    switch(field->get(player_head))
     {
-        field->set(player_head, Object::empty);
-        place_food();
-        player->lengthen();
+        case Object::food:
+        {
+            field->set(player_head, Object::empty);
+            place_food();
+            player->lengthen();
+            break;
+        }
+        case Object::wall:
+        {
+            throw std::logic_error("Player ded");
+            break;
+        }
+        default:
+            break;
     }
     
     player->move(field->field_size);
@@ -50,12 +62,24 @@ void Game::place_food()
     field->set({(int) dist(rng), (int) dist(rng)}, Object::food);
 }
 
+void Game::add_walls()
+{
+    for(int i = 0; i < field->field_size; i++)
+    {
+        field->set({0, i}, Object::wall);
+        field->set({field->field_size - 1, i}, Object::wall);
+        field->set({i, 0}, Object::wall);
+        field->set({i, field->field_size - 1}, Object::wall);
+    }
+}
+
 Game::Game(int pField_size)
 {
     field = new Field(pField_size);
     player = new Player();
 
     place_food();
+    add_walls();
     tick();
 }
 

@@ -12,7 +12,7 @@ inline bool operator==(const point& left, const point& right)
            left.x == right.x;
 }
 
-enum class Object { empty, food };
+enum class Object { empty, food, wall };
 
 class Field
 {
