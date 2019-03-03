@@ -1,10 +1,10 @@
 #pragma once
 
 #include "field.hpp"
-#include "ui.hpp"
 #include "player.hpp"
+#include "ui.hpp"
 
-struct GameEnded : std::exception {};
+struct GameEnd : std::exception {};
 
 class Game
 {

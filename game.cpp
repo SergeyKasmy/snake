@@ -36,7 +36,7 @@ void Game::update()
         case Object::wall:
         case Object::player:
         {
-            throw GameEnded();
+            throw GameEnd();
             break;
         }
         default:
@@ -70,7 +70,7 @@ int Game::start()
     {
         tick();
     }
-    catch(const GameEnded &)
+    catch(const GameEnd &)
     {
         return 1;
     }
