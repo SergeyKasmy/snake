@@ -10,7 +10,6 @@ class Game
         UI ui;
         Field *field;
         Player *player;
-        point food;
 
         void tick();
         void update();
