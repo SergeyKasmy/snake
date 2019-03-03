@@ -1,5 +1,4 @@
 #include <chrono>
-#include <random>
 #include <stdexcept>
 #include "game.hpp"
 
@@ -33,7 +32,7 @@ void Game::update()
         case Object::food:
         {
             field->set(player_head, Object::empty);
-            place_food();
+            field->place_food();
             player->lengthen();
             break;
         }
@@ -50,28 +49,6 @@ void Game::update()
     ui.display(field, player);
 }
 
-void Game::place_food()
-{
-    // pseudo-random number generator
-    static std::mt19937 rng;
-    // generate a seed from a random device in the system
-    rng.seed(std::random_device()());
-    // make a class to distribute the random numbers
-    static std::uniform_int_distribution<std::mt19937::result_type> dist(0, field->field_size - 1);
-
-    field->set({(int) dist(rng), (int) dist(rng)}, Object::food);
-}
-
-void Game::add_walls()
-{
-    for(int i = 0; i < field->field_size; i++)
-    {
-        field->set({0, i}, Object::wall);
-        field->set({field->field_size - 1, i}, Object::wall);
-        field->set({i, 0}, Object::wall);
-        field->set({i, field->field_size - 1}, Object::wall);
-    }
-}
 
 Game::Game(int pField_size)
 {
@@ -87,8 +64,8 @@ Game::~Game()
 
 int Game::start()
 {
-    place_food();
-    add_walls();
+    field->place_food();
+    field->add_walls();
 
     try
     {

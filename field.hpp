@@ -26,4 +26,7 @@ class Field
         // TODO: implement value checking in set()
         Object get(point pPoint) const {    return field[pPoint.y][pPoint.x]; }
         void set(point pPoint, Object object) {  field[pPoint.y][pPoint.x] = object;    }
+
+        void place_food();
+        void add_walls();
 };
