@@ -17,7 +17,7 @@ UI::~UI()
     endwin();
 }
 
-void UI::display_field(Field *field, Player *player)
+void UI::display(Field *field, Player *player)
 {
     move(0, 0);
 

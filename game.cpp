@@ -36,7 +36,7 @@ void Game::update()
     field->set({(int) dist(rng), (int) dist(rng)}, FieldObject::food);
 
     player->move();  
-    ui.display_field(field, player);
+    ui.display(field, player);
 }
 
 Game::Game(int pField_size)
