@@ -26,7 +26,7 @@ void Game::tick()
 
 void Game::update()
 {
-    player->move();
+    player->move(field->field_size);
     
     if(player->get(0) == food)
     {

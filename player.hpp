@@ -12,8 +12,8 @@ class Player
         unsigned int length = 1;
     public:
         Facing facing = Facing::right;
-        void move();
+        void move(int field_size);
         void lengthen() { length++; };
         point get(int at) { return position.at(at); }
-        int get_length() { return length; }
+        int get_size() { return position.size(); }
 };
