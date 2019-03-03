@@ -6,6 +6,7 @@ UI::UI()
     initscr();
     cbreak();
     noecho();
+    curs_set(0);
     nodelay(stdscr, true);
     keypad(stdscr, true);
 }
@@ -24,13 +25,21 @@ void UI::display_field(Field *field, Player *player)
     {
         for(int column = 0; column < field->field_size; column++)
         {
-            printw("%d", field->get({row, column}));
+            switch(field->get({row, column}))
+            {
+                case FieldObject::empty:
+                    mvaddch(row, column, ' ');
+                    break;
+                case FieldObject::food:
+                    mvaddch(row, column, 'f');
+                    break;
+            }
         }
         
         move(row+1, 0);
     }
     
-    mvaddch(player->get().y, player->get().x, '2');
+    mvaddch(player->get().y, player->get().x, 'p');
     refresh();
 }
 
