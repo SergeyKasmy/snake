@@ -16,7 +16,7 @@ class Game
         void tick();
         void update();
     public:
-        Game(int pField_size = 15);
+        Game(point pField_size = {15, 25});
         ~Game();
 
         int start();

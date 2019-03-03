@@ -19,9 +19,9 @@ class Field
     private:
         Object **field;
     public:
-        Field(int pField_size);
+        Field(point pField_size);
         ~Field();
-        const int field_size;
+        const point field_size;
 
         // TODO: implement value checking in set()
         Object get(point pPoint) const {    return field[pPoint.y][pPoint.x]; }

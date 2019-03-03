@@ -21,9 +21,9 @@ void UI::display(Field *field, Player *player)
 {
     move(0, 0);
 
-    for(int row = 0; row < field->field_size; row++)
+    for(int row = 0; row < field->field_size.y; row++)
     {
-        for(int column = 0; column < field->field_size; column++)
+        for(int column = 0; column < field->field_size.x; column++)
         {
             switch(field->get({row, column}))
             {

@@ -50,7 +50,7 @@ void Game::update()
 }
 
 
-Game::Game(int pField_size)
+Game::Game(point pField_size)
 {
     field = new Field(pField_size);
     player = new Player();
