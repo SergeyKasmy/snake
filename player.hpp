@@ -14,6 +14,6 @@ class Player
         Facing facing = Facing::right;
         void move(int field_size);
         void lengthen() { length++; };
-        point get(int at) { return position.at(at); }
+        point get(int at = 0) { return position.at(at); }
         int get_size() { return position.size(); }
 };
