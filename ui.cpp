@@ -39,7 +39,10 @@ void UI::display(Field *field, Player *player)
         move(row+1, 0);
     }
     
-    mvaddch(player->get().y, player->get().x, 'p');
+    for(int i = 0; i < player->get_length(); i++)
+    {
+        mvaddch(player->get(i).y, player->get(i).x, 'p');
+    }
     refresh();
 }
 

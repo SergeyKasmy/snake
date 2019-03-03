@@ -5,17 +5,27 @@ void Player::move()
 {
     switch (facing)
     {
-        case Facing::up:
-            position[0].y--;
-            break;
         case Facing::right:
-            position[0].x++;
+        {
+            position.insert(position.begin(), { position.front().y, position.front().x + 1 });
             break;
+        }
         case Facing::down:
-            position[0].y++;
+        {
+            position.insert(position.begin(), { position.front().y + 1, position.front().x });
             break;
+        }
         case Facing::left:
-            position[0].x--;
+        {
+            position.insert(position.begin(), { position.front().y, position.front().x - 1 });
             break;
+        }
+        case Facing::up:
+        {
+            position.insert(position.begin(), { position.front().y - 1, position.front().x });
+            break;
+        }
     }
+
+    if(position.size() == length) position.pop_back();
 }

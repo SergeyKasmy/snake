@@ -28,10 +28,11 @@ void Game::update()
 {
     player->move();
     
-    if(player->get() == food)
+    if(player->get(0) == food)
     {
         field->set(food, Object::empty);
         place_food();
+        player->lengthen();
     }
     
     ui.display(field, player);

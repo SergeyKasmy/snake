@@ -3,15 +3,17 @@
 #include <vector>
 #include "field.hpp"
 
-enum class Facing { up, right, down, left, null};
+enum class Facing { right, down, left, up, null};
 
 class Player
 {
     private:
         std::vector<point> position {{0, 1}};
+        unsigned int length = 1;
     public:
         Facing facing = Facing::right;
         void move();
-
-        point get() { return position[0]; }
+        void lengthen() { length++; };
+        point get(int at) { return position.at(at); }
+        int get_length() { return length; }
 };
