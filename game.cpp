@@ -64,8 +64,8 @@ Game::~Game()
 
 int Game::start()
 {
-    field->place_food();
     field->add_walls();
+    field->place_food();
 
     try
     {
