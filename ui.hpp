@@ -8,6 +8,6 @@ class UI
     public:
         UI();
         ~UI();
-        void display(Field *field, Player *player);
+        void display(Field *field);
         Facing get_input();
 };

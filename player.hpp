@@ -15,5 +15,5 @@ class Player
         void move(point field_size);
         void lengthen() { length++; };
         point get(int at = 0) { return position.at(at); }
-        int get_size() { return position.size(); }
+        int size() { return position.size(); }
 };

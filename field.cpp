@@ -1,5 +1,6 @@
 #include <random>
 #include "field.hpp"
+#include "player.hpp"
 
 Field::Field(point pField_size) : field_size(pField_size)
 {
@@ -50,5 +51,25 @@ void Field::add_walls()
     {
         field[0][x] = Object::wall;
         field[field_size.y - 1][x] = Object::wall;
+    }
+}
+
+void Field::update_player(Player *player)
+{
+    for(int row = 0; row < field_size.y; ++row)
+    {
+        for(int col = 0; col < field_size.x; ++col)
+        {
+            if (field[row][col] == Object::player) 
+            {
+                field[row][col] = Object::empty;
+            }
+        }
+    }
+
+    for(int i = 0; i < player->size(); ++i)
+    {
+        point player_point = player->get(i);
+        field[player_point.y][player_point.x] = Object::player;
     }
 }

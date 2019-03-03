@@ -17,7 +17,7 @@ UI::~UI()
     endwin();
 }
 
-void UI::display(Field *field, Player *player)
+void UI::display(Field *field)
 {
     move(0, 0);
 
@@ -30,6 +30,9 @@ void UI::display(Field *field, Player *player)
                 case Object::empty:
                     mvaddch(row, column, ' ');
                     break;
+                case Object::player:
+                    mvaddch(row, column, 'p');
+                    break;
                 case Object::food:
                     mvaddch(row, column, 'f');
                     break;
@@ -40,11 +43,6 @@ void UI::display(Field *field, Player *player)
         }
         
         move(row+1, 0);
-    }
-    
-    for(int i = 0; i < player->get_size(); i++)
-    {
-        mvaddch(player->get(i).y, player->get(i).x, 'p');
     }
     refresh();
 }

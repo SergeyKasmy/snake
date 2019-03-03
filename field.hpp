@@ -1,5 +1,8 @@
 #pragma once
 
+//#include "player.hpp"
+class Player;
+
 struct point
 {
     int y;
@@ -12,7 +15,7 @@ inline bool operator==(const point& left, const point& right)
            left.x == right.x;
 }
 
-enum class Object { empty, food, wall };
+enum class Object { empty, player, food, wall };
 
 class Field
 {
@@ -29,4 +32,5 @@ class Field
 
         void place_food();
         void add_walls();
+        void update_player(Player *player);
 };

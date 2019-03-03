@@ -2,8 +2,6 @@
 #include <stdexcept>
 #include "game.hpp"
 
-#include <ncurses.h>
-
 void Game::tick()
 {
     const static std::chrono::milliseconds TICK_DURATION(500);
@@ -18,7 +16,6 @@ void Game::tick()
             update();
             last_tick = std::chrono::high_resolution_clock::now();
         }
-
 
         if((input = ui.get_input()) != Facing::null) player->facing = input;
     }
@@ -45,8 +42,9 @@ void Game::update()
             break;
     }
     
+    field->update_player(player);
     player->move(field->field_size);
-    ui.display(field, player);
+    ui.display(field);
 }
 
 
