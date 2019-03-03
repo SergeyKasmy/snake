@@ -3,6 +3,6 @@
 
 int main()
 {
-    Game obj;
-    return 0;
+    Game game;
+    return game.start();
 }

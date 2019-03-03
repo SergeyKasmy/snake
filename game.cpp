@@ -39,7 +39,7 @@ void Game::update()
         }
         case Object::wall:
         {
-            throw std::logic_error("Player ded");
+            throw GameEnded();
             break;
         }
         default:
@@ -77,14 +77,27 @@ Game::Game(int pField_size)
 {
     field = new Field(pField_size);
     player = new Player();
-
-    place_food();
-    add_walls();
-    tick();
 }
 
 Game::~Game()
 {
     delete field;
     delete player;
+}
+
+int Game::start()
+{
+    place_food();
+    add_walls();
+
+    try
+    {
+        tick();
+    }
+    catch(const GameEnded &)
+    {
+        return 1;
+    }
+
+    return 0;
 }

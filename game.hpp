@@ -4,6 +4,8 @@
 #include "ui.hpp"
 #include "player.hpp"
 
+struct GameEnded : std::exception {};
+
 class Game
 {
     private:
@@ -18,4 +20,6 @@ class Game
     public:
         Game(int pField_size = 15);
         ~Game();
+
+        int start();
 };
