@@ -45,7 +45,7 @@ void Game::update()
     
     field->update_player(player);
     player->move(field->field_size);
-    ui.display(field);
+    ui.display_field(field);
 }
 
 

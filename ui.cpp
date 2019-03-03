@@ -17,7 +17,7 @@ UI::~UI()
     endwin();
 }
 
-void UI::display(Field *field)
+void UI::display_field(Field *field)
 {
     move(0, 0);
 
