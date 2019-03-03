@@ -2,10 +2,10 @@
 
 Field::Field(int pField_size) : field_size(pField_size)
 {
-    field = new FieldObject*[field_size];
+    field = new Object*[field_size];
     for(int row = 0; row < field_size; row++)
     {
-        field[row] = new FieldObject[field_size];
+        field[row] = new Object[field_size];
     }
 }
 

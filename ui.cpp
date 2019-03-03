@@ -27,10 +27,10 @@ void UI::display(Field *field, Player *player)
         {
             switch(field->get({row, column}))
             {
-                case FieldObject::empty:
+                case Object::empty:
                     mvaddch(row, column, ' ');
                     break;
-                case FieldObject::food:
+                case Object::food:
                     mvaddch(row, column, 'f');
                     break;
             }
