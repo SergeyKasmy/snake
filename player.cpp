@@ -1,5 +1,5 @@
+#include <stdexcept>
 #include "player.hpp"
-#include <ncurses.h>
 
 void Player::move(int field_size)
 {
@@ -37,7 +37,11 @@ void Player::move(int field_size)
                 position.insert(position.begin(), { position.front().y - 1, position.front().x });
             break;
         }
+        default:
+        {
+            throw std::invalid_argument("The player has wrong Facing");
+        }
     }
 
-    if(position.size() == length) position.pop_back();
+    if(position.size() > length) position.pop_back();
 }
