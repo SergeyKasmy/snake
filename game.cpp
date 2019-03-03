@@ -6,7 +6,7 @@
 
 void Game::tick()
 {
-    const static std::chrono::seconds TICK_DURATION(1);
+    const static std::chrono::milliseconds TICK_DURATION(500);
     auto last_tick = std::chrono::high_resolution_clock::now();
     Facing input;
 
@@ -16,7 +16,7 @@ void Game::tick()
         if((last_tick + TICK_DURATION) < std::chrono::high_resolution_clock::now())
         {
             update();
-            last_tick += TICK_DURATION;
+            last_tick = std::chrono::high_resolution_clock::now();
         }
 
 
