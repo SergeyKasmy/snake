@@ -1,25 +1,51 @@
-#include <ncurses.h>
+#include <string.h>
+#include "game.hpp"
 #include "ui.hpp"
 
-UI::UI()
+MainMenu::MainMenu()
 {
     initscr();
     cbreak();
     noecho();
-    curs_set(0);
-    nodelay(stdscr, true);
-    keypad(stdscr, true);
 }
 
-UI::~UI()
+MainMenu::~MainMenu()
 {
     getch();
     endwin();
 }
 
-void UI::display_field(Field *field)
+void MainMenu::show()
 {
-    move(0, 0);
+    int row, col;
+    getmaxyx(stdscr, row, col);
+    mvprintw(row/2, (col-strlen("New Game"))/2, "New Game");
+    mvprintw(row/2+1, (col-strlen("Exit"))/2, "Exit");
+
+    getch();
+    WINDOW *game_win = newwin(row, col, 0, 0);
+    GameUI *game_ui = new GameUI(game_win);
+    Game game(game_ui);
+    game.start();
+    delwin(game_win);
+    delete game_ui;
+}
+
+GameUI::GameUI(WINDOW *pWin) : mWin(pWin)
+{
+    curs_set(0);
+    nodelay(mWin, true);
+    keypad(mWin, true);
+}
+
+GameUI::~GameUI()
+{
+    curs_set(1);
+}
+
+void GameUI::display_field(Field *field)
+{
+    wmove(mWin, 0, 0);
 
     for(int row = 0; row < field->field_size.y; row++)
     {
@@ -28,28 +54,28 @@ void UI::display_field(Field *field)
             switch(field->get({row, column}))
             {
                 case Object::empty:
-                    mvaddch(row, column, ' ');
+                    mvwaddch(mWin, row, column, ' ');
                     break;
                 case Object::player:
-                    mvaddch(row, column, 'p');
+                    mvwaddch(mWin, row, column, 'p');
                     break;
                 case Object::food:
-                    mvaddch(row, column, 'f');
+                    mvwaddch(mWin, row, column, 'f');
                     break;
                 case Object::wall:
-                    mvaddch(row, column, 'w');
+                    mvwaddch(mWin, row, column, 'w');
                     break;
             }
         }
         
-        move(row+1, 0);
+        wmove(mWin, row+1, 0);
     }
     refresh();
 }
 
-Facing UI::get_input()
+Facing GameUI::get_input()
 {
-    int input = getch();
+    int input = wgetch(mWin);
     switch (input)
     {
         case KEY_UP:

@@ -12,7 +12,7 @@ void Game::tick()
 
     while(true)
     {
-        if((input = ui.get_input()) != Facing::null) player->facing = input;
+        if((input = ui->get_input()) != Facing::null) player->facing = input;
         
         // true if the time of the next tick(last tick + tick duration) is in the past
         while((last_tick + TICK_DURATION) < std::chrono::high_resolution_clock::now())
@@ -50,11 +50,11 @@ void Game::update()
     
     field->update_player(player);
     player->move(field->field_size);
-    ui.display_field(field);
+    ui->display_field(field);
 }
 
 
-Game::Game(point pField_size)
+Game::Game(GameUI *pUi, point pField_size) : ui(pUi)
 {
     field = new Field(pField_size);
     player = new Player();

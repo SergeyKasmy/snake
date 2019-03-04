@@ -1,8 +1,9 @@
 #include <cstdio>
-#include "game.hpp"
+#include "ui.hpp"
 
 int main()
 {
-    Game game;
-    return game.start();
+    MainMenu main_menu;
+    main_menu.show();
+    return 0;
 }
