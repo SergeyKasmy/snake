@@ -9,6 +9,15 @@ Field::Field(point p_field_size) : m_field_size(p_field_size)
 	{
 		m_field[row] = new Object[m_field_size.x];
 	}
+
+	for(int y = 0; y < m_field_size.y; ++y)
+	{
+		for(int x = 0; x < m_field_size.x; ++x)
+		{
+			m_field[y][x] = Object::empty;
+		}
+	}
+	
 }
 
 Field::~Field()
