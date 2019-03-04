@@ -3,7 +3,7 @@
 
 int main()
 {
-    MainMenu main_menu;
-    main_menu.show();
-    return 0;
+	MainMenu main_menu;
+	main_menu.show();
+	return 0;
 }

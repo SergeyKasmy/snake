@@ -6,79 +6,79 @@
 
 void Game::tick()
 {
-    const static std::chrono::milliseconds TICK_DURATION(350);
-    auto last_tick = std::chrono::high_resolution_clock::now();
-    Facing input;
+	const static std::chrono::milliseconds TICK_DURATION(225);
+	auto last_tick = std::chrono::high_resolution_clock::now();
+	Facing input;
 
-    while(true)
-    {
-        if((input = ui->get_input()) != Facing::null) player->facing = input;
-        
-        // true if the time of the next tick(last tick + tick duration) is in the past
-        while((last_tick + TICK_DURATION) < std::chrono::high_resolution_clock::now())
-        {
-            update();
-            last_tick += TICK_DURATION;
-        }
+	while(true)
+	{
+		if((input = m_ui->get_input()) != Facing::null) m_player->facing = input;
+		
+		// true if the time of the next tick(last tick + tick duration) is in the past
+		while((last_tick + TICK_DURATION) < std::chrono::high_resolution_clock::now())
+		{
+			update();
+			last_tick += TICK_DURATION;
+		}
 
-        // sleep for 25 ms
-        usleep(25 * 1000);
-    }
+		// sleep for 25 ms
+		usleep(25 * 1000);
+	}
 }
 
 void Game::update()
 {
-    point player_head = player->get();
-    switch(field->get(player_head))
-    {
-        case Object::food:
-        {
-            field->set(player_head, Object::empty);
-            field->place_food();
-            player->lengthen();
-            break;
-        }
-        case Object::wall:
-        case Object::player:
-        {
-            throw GameEnd();
-            break;
-        }
-        default:
-            break;
-    }
-    
-    field->update_player(player);
-    player->move(field->field_size);
-    ui->display_field(field);
+	point player_head = m_player->get();
+	switch(m_field->get(player_head))
+	{
+		case Object::food:
+		{
+			m_field->set(player_head, Object::empty);
+			m_field->place_food();
+			m_player->lengthen();
+			break;
+		}
+		case Object::wall:
+		case Object::player:
+		{
+			throw GameEnd();
+			break;
+		}
+		default:
+			break;
+	}
+	
+	m_field->update_player(m_player);
+	m_player->move(m_field->m_field_size);
+	m_ui->display_field(m_field);
 }
 
 
-Game::Game(GameUI *pUi, point pField_size) : ui(pUi)
+Game::Game(GameUI *p_ui, point p_field_size) : m_ui(p_ui)
 {
-    field = new Field(pField_size);
-    player = new Player();
+	m_field = new Field(p_field_size);
+	m_player = new Player();
 }
 
 Game::~Game()
 {
-    delete field;
-    delete player;
+	delete m_field;
+	delete m_player;
 }
 
 int Game::start()
 {
-    field->add_walls();
-    field->place_food();
+	m_field->add_walls();
+	m_field->place_food();
 
-    try
-    {
-        tick();
-    }
-    catch(const GameEnd &)
-    {
-        return 1;
-    }
+	try
+	{
+		tick();
+	}
+	catch(const GameEnd &)
+	{
+		return 1;
+	}
 
-    return 0;
+	return 0;
 }

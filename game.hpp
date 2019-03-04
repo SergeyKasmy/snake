@@ -8,16 +8,16 @@ struct GameEnd : std::exception {};
 
 class Game
 {
-    private:
-        GameUI *ui;
-        Field *field;
-        Player *player;
+	private:
+		GameUI *m_ui;
+		Field *m_field;
+		Player *m_player;
 
-        void tick();
-        void update();
-    public:
-        Game(GameUI *pUi, point pField_size = {15, 25});
-        ~Game();
+		void tick();
+		void update();
+	public:
+		Game(GameUI *p_ui, point p_field_size = {15, 25});
+		~Game();
 
-        int start();
+		int start();
 };
