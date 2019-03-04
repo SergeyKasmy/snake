@@ -11,7 +11,7 @@ void Game::tick()
     while(true)
     {
         // true if the time of the next tick(last tick + tick duration) is in the past
-        if((last_tick + TICK_DURATION) < std::chrono::high_resolution_clock::now())
+        while((last_tick + TICK_DURATION) < std::chrono::high_resolution_clock::now())
         {
             update();
             last_tick += TICK_DURATION;
