@@ -1,5 +1,7 @@
 #include <chrono>
 #include <stdexcept>
+#include <unistd.h>
+
 #include "game.hpp"
 
 void Game::tick()
@@ -10,6 +12,8 @@ void Game::tick()
 
     while(true)
     {
+        if((input = ui.get_input()) != Facing::null) player->facing = input;
+        
         // true if the time of the next tick(last tick + tick duration) is in the past
         while((last_tick + TICK_DURATION) < std::chrono::high_resolution_clock::now())
         {
@@ -17,7 +21,8 @@ void Game::tick()
             last_tick += TICK_DURATION;
         }
 
-        if((input = ui.get_input()) != Facing::null) player->facing = input;
+        // sleep for 25 ms
+        usleep(25 * 1000);
     }
 }
 
