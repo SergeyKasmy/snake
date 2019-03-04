@@ -5,8 +5,17 @@
 #include "field.hpp"
 #include "player.hpp"
 
+struct GameExit : std::exception {};
+
 class MainMenu
 {
+	private:
+		enum class MenuItem { new_game, exit };
+
+		int m_size_rows, m_size_cols;
+
+		void select(MenuItem p_selected_item);
+		void new_game();
 	public:
 		MainMenu();
 		~MainMenu();

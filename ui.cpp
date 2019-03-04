@@ -7,23 +7,73 @@ MainMenu::MainMenu()
 	initscr();
 	cbreak();
 	noecho();
+	keypad(stdscr, true);
+	getmaxyx(stdscr, m_size_rows, m_size_cols);
 }
 
 MainMenu::~MainMenu()
 {
-	getch();
 	endwin();
 }
 
 void MainMenu::show()
 {
-	int row, col;
-	getmaxyx(stdscr, row, col);
-	mvprintw(row/2, (col-strlen("New Game"))/2, "New Game");
-	mvprintw(row/2+1, (col-strlen("Exit"))/2, "Exit");
+	point item_new_game = {m_size_rows / 2, (int) (m_size_cols - strlen("New Game")) / 2};
+	point item_exit = {m_size_rows / 2 + 1, (int) (m_size_cols - strlen("Exit")) / 2};
 
-	getch();
-	WINDOW *game_win = newwin(row, col, 0, 0);
+	MenuItem selected_item = MenuItem::new_game;
+
+	try
+	{
+		while(true)
+		{
+			mvprintw(item_new_game.y, item_new_game.x, "New Game");
+			mvprintw(item_exit.y, item_exit.x, "Exit");
+
+			switch(selected_item)
+			{
+				case MenuItem::new_game:
+					move(item_new_game.y, item_new_game.x);
+					break;
+				case MenuItem::exit:
+					move(item_exit.y, item_exit.x);
+					break;
+			}
+			refresh();
+			int ch = getch();
+			switch(ch)
+			{
+				case KEY_UP:
+					selected_item = MenuItem::new_game;
+					break;
+				case KEY_DOWN:
+					selected_item = MenuItem::exit;
+					break;
+				case '\n':
+					select(selected_item);
+					erase();
+					break;
+			}
+		}
+	}
+	catch(const GameExit &) {}
+}
+
+void MainMenu::select(MenuItem p_selected_item)
+{
+	switch (p_selected_item)
+	{
+		case MenuItem::new_game:
+			new_game();
+			break;
+		case MenuItem::exit:
+			throw GameExit();
+	}
+}
+
+void MainMenu::new_game()
+{
+	WINDOW *game_win = newwin(m_size_rows, m_size_cols, 0, 0);
 	GameUI *game_ui = new GameUI(game_win);
 	Game game(game_ui);
 	game.start();
@@ -34,8 +84,8 @@ void MainMenu::show()
 GameUI::GameUI(WINDOW *p_win) : m_win(p_win)
 {
     curs_set(0);
-	nodelay(m_win, true);
 	keypad(m_win, true);
+	nodelay(m_win, true);
 }
 
 GameUI::~GameUI()
