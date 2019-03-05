@@ -4,12 +4,15 @@
 namespace MenuItem
 {
 	const static menu_item_t new_game = 0;
-	const static menu_item_t exit = 1;
+	const static menu_item_t settings = 1;
+	const static menu_item_t exit = 2;
 
 	const static char* const new_game_str = "New Game";
+	const static char* const settings_str = "Settings";
 	const static char* const exit_srt = "Exit";
 
 	const static int new_game_str_length = 8;
+	const static int settings_str_length = 8;
 	const static int exit_str_length = 4;
 }
 
@@ -38,7 +41,8 @@ void MainMenu::show()
 	try
 	{
 		Point item_new_game = {m_size_rows / 2, (int) (m_size_cols - MenuItem::new_game_str_length) / 2};
-		Point item_exit = {m_size_rows / 2 + 1, (int) (m_size_cols - MenuItem::exit_str_length) / 2};
+		Point item_settings = {m_size_rows / 2 + 1, (int) (m_size_cols - MenuItem::settings_str_length) / 2};
+		Point item_exit = {m_size_rows / 2 + 2, (int) (m_size_cols - MenuItem::exit_str_length) / 2};
 		menu_item_t selected_item = MenuItem::new_game;
 
 		// holds the char input from the user
@@ -47,6 +51,7 @@ void MainMenu::show()
 		while(true)
 		{
 			mvprintw(item_new_game.y, item_new_game.x, MenuItem::new_game_str);
+			mvprintw(item_settings.y, item_settings.x, MenuItem::settings_str);
 			mvprintw(item_exit.y, item_exit.x, MenuItem::exit_srt);
 
 			// make the currently selected item bold
@@ -54,6 +59,9 @@ void MainMenu::show()
 			{
 				case MenuItem::new_game:
 					mvchgat(item_new_game.y, item_new_game.x, MenuItem::new_game_str_length, A_BOLD, 0, NULL);
+					break;
+				case MenuItem::settings:
+					mvchgat(item_settings.y, item_settings.x, MenuItem::settings_str_length, A_BOLD, 0, NULL);
 					break;
 				case MenuItem::exit:
 					mvchgat(item_exit.y, item_exit.x, MenuItem::exit_str_length, A_BOLD, 0, NULL);
@@ -87,6 +95,7 @@ void MainMenu::select(menu_item_t p_selected_item)
 		case MenuItem::new_game:
 			new_game();
 			break;
+		case MenuItem::settings:
 		case MenuItem::exit:
 			throw GameExit();
 	}
