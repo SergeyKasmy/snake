@@ -64,10 +64,10 @@ void MainMenu::show()
 			switch(ch = getch())
 			{
 				case KEY_UP:
-					selected_item = MenuItem::new_game;
+					selected_item = selected_item != MenuItem::new_game ? selected_item - 1 : MenuItem::exit;
 					break;
 				case KEY_DOWN:
-					selected_item = MenuItem::exit;
+					selected_item = selected_item != MenuItem::exit ? selected_item + 1 : MenuItem::new_game;
 					break;
 				case '\n':
 					select(selected_item);
