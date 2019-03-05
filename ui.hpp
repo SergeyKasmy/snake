@@ -28,7 +28,6 @@ class GameUI
 		WINDOW *m_win;
 	public:
 		GameUI(WINDOW *p_win);
-		~GameUI();
 		void display_field(Field *p_field);
 		Facing get_input();
 };

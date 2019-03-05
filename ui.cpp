@@ -1,12 +1,16 @@
 #include <string.h>
+
 #include "game.hpp"
 #include "ui.hpp"
 
+// sets up the main ui
 MainMenu::MainMenu()
 {
 	initscr();
 	cbreak();
 	noecho();
+	curs_set(0);
+
 	keypad(stdscr, true);
 	getmaxyx(stdscr, m_size_rows, m_size_cols);
 }
@@ -16,32 +20,36 @@ MainMenu::~MainMenu()
 	endwin();
 }
 
+// shows the main menu
 void MainMenu::show()
 {
-	Point item_new_game = {m_size_rows / 2, (int) (m_size_cols - strlen("New Game")) / 2};
-	Point item_exit = {m_size_rows / 2 + 1, (int) (m_size_cols - strlen("Exit")) / 2};
-
-	MenuItem selected_item = MenuItem::new_game;
-
 	try
 	{
+		Point item_new_game = {m_size_rows / 2, (int) (m_size_cols - strlen("New Game")) / 2};
+		Point item_exit = {m_size_rows / 2 + 1, (int) (m_size_cols - strlen("Exit")) / 2};
+		MenuItem selected_item = MenuItem::new_game;
+
+		// holds the char input from the user
+		int ch;
+
 		while(true)
 		{
 			mvprintw(item_new_game.y, item_new_game.x, "New Game");
 			mvprintw(item_exit.y, item_exit.x, "Exit");
 
+			// make the currently selected item bold
 			switch(selected_item)
 			{
 				case MenuItem::new_game:
-					move(item_new_game.y, item_new_game.x);
+					mvchgat(item_new_game.y, item_new_game.x, strlen("New Game"), A_BOLD, 0, NULL);
 					break;
 				case MenuItem::exit:
-					move(item_exit.y, item_exit.x);
+					mvchgat(item_exit.y, item_exit.x, strlen("Exit"), A_BOLD, 0, NULL);
 					break;
 			}
 			refresh();
-			int ch = getch();
-			switch(ch)
+
+			switch(ch = getch())
 			{
 				case KEY_UP:
 					selected_item = MenuItem::new_game;
@@ -56,6 +64,7 @@ void MainMenu::show()
 			}
 		}
 	}
+	// exit the game, if it's called for an exit
 	catch(const GameExit &) {}
 }
 
@@ -75,23 +84,20 @@ void MainMenu::new_game()
 {
 	WINDOW *game_win = newwin(m_size_rows, m_size_cols, 0, 0);
 	GameUI *game_ui = new GameUI(game_win);
+
 	Game game(game_ui);
 	game.start();
+
 	delwin(game_win);
 	delete game_ui;
 }
 
 GameUI::GameUI(WINDOW *p_win) : m_win(p_win)
 {
-    curs_set(0);
 	keypad(m_win, true);
 	nodelay(m_win, true);
 }
 
-GameUI::~GameUI()
-{
-	curs_set(1);
-}
 
 void GameUI::display_field(Field *p_field)
 {
