@@ -3,6 +3,14 @@
 #include "game.hpp"
 #include "ui.hpp"
 
+namespace MenuItem
+{
+	const static menu_item_t new_game = 0;
+	const static menu_item_t exit = 1;
+}
+
+struct GameExit : std::exception {};
+
 // sets up the main ui
 MainMenu::MainMenu()
 {
@@ -27,7 +35,7 @@ void MainMenu::show()
 	{
 		Point item_new_game = {m_size_rows / 2, (int) (m_size_cols - strlen("New Game")) / 2};
 		Point item_exit = {m_size_rows / 2 + 1, (int) (m_size_cols - strlen("Exit")) / 2};
-		MenuItem selected_item = MenuItem::new_game;
+		menu_item_t selected_item = MenuItem::new_game;
 
 		// holds the char input from the user
 		int ch;
@@ -68,7 +76,7 @@ void MainMenu::show()
 	catch(const GameExit &) {}
 }
 
-void MainMenu::select(MenuItem p_selected_item)
+void MainMenu::select(menu_item_t p_selected_item)
 {
 	switch (p_selected_item)
 	{

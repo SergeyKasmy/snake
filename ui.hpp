@@ -5,16 +5,14 @@
 #include "field.hpp"
 #include "player.hpp"
 
-struct GameExit : std::exception {};
+using menu_item_t = int;
 
 class MainMenu
 {
 	private:
-		enum class MenuItem { new_game, exit };
-
 		int m_size_rows, m_size_cols;
 
-		void select(MenuItem p_selected_item);
+		void select(menu_item_t p_selected_item);
 		void new_game();
 	public:
 		MainMenu();
