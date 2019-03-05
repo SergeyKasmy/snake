@@ -40,9 +40,9 @@ void MainMenu::show()
 {
 	try
 	{
-		Point item_new_game = {m_size_rows / 2, (int) (m_size_cols - MenuItem::new_game_str_length) / 2};
-		Point item_settings = {m_size_rows / 2 + 1, (int) (m_size_cols - MenuItem::settings_str_length) / 2};
-		Point item_exit = {m_size_rows / 2 + 2, (int) (m_size_cols - MenuItem::exit_str_length) / 2};
+		Point item_new_game = {m_size_rows / 2, (m_size_cols - MenuItem::new_game_str_length) / 2};
+		Point item_settings = {m_size_rows / 2 + 1, (m_size_cols - MenuItem::settings_str_length) / 2};
+		Point item_exit = {m_size_rows / 2 + 2, (m_size_cols - MenuItem::exit_str_length) / 2};
 		menu_item_t selected_item = MenuItem::new_game;
 
 		// holds the char input from the user
@@ -50,6 +50,8 @@ void MainMenu::show()
 
 		while(true)
 		{
+			mvprintw(m_size_rows / 4, (m_size_cols - 5) / 2, "Snake");
+
 			mvprintw(item_new_game.y, item_new_game.x, MenuItem::new_game_str);
 			mvprintw(item_settings.y, item_settings.x, MenuItem::settings_str);
 			mvprintw(item_exit.y, item_exit.x, MenuItem::exit_srt);
