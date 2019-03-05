@@ -1,5 +1,3 @@
-#include <string.h>
-
 #include "game.hpp"
 #include "ui.hpp"
 
@@ -7,6 +5,12 @@ namespace MenuItem
 {
 	const static menu_item_t new_game = 0;
 	const static menu_item_t exit = 1;
+
+	const static char* const new_game_str = "New Game";
+	const static char* const exit_srt = "Exit";
+
+	const static int new_game_str_length = 8;
+	const static int exit_str_length = 4;
 }
 
 struct GameExit : std::exception {};
@@ -33,8 +37,8 @@ void MainMenu::show()
 {
 	try
 	{
-		Point item_new_game = {m_size_rows / 2, (int) (m_size_cols - strlen("New Game")) / 2};
-		Point item_exit = {m_size_rows / 2 + 1, (int) (m_size_cols - strlen("Exit")) / 2};
+		Point item_new_game = {m_size_rows / 2, (int) (m_size_cols - MenuItem::new_game_str_length) / 2};
+		Point item_exit = {m_size_rows / 2 + 1, (int) (m_size_cols - MenuItem::exit_str_length) / 2};
 		menu_item_t selected_item = MenuItem::new_game;
 
 		// holds the char input from the user
@@ -42,17 +46,17 @@ void MainMenu::show()
 
 		while(true)
 		{
-			mvprintw(item_new_game.y, item_new_game.x, "New Game");
-			mvprintw(item_exit.y, item_exit.x, "Exit");
+			mvprintw(item_new_game.y, item_new_game.x, MenuItem::new_game_str);
+			mvprintw(item_exit.y, item_exit.x, MenuItem::exit_srt);
 
 			// make the currently selected item bold
 			switch(selected_item)
 			{
 				case MenuItem::new_game:
-					mvchgat(item_new_game.y, item_new_game.x, strlen("New Game"), A_BOLD, 0, NULL);
+					mvchgat(item_new_game.y, item_new_game.x, MenuItem::new_game_str_length, A_BOLD, 0, NULL);
 					break;
 				case MenuItem::exit:
-					mvchgat(item_exit.y, item_exit.x, strlen("Exit"), A_BOLD, 0, NULL);
+					mvchgat(item_exit.y, item_exit.x, MenuItem::exit_str_length, A_BOLD, 0, NULL);
 					break;
 			}
 			refresh();
