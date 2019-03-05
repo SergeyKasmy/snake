@@ -2,7 +2,7 @@
 #include "field.hpp"
 #include "player.hpp"
 
-Field::Field(point p_field_size) : m_field_size(p_field_size)
+Field::Field(Point p_field_size) : m_field_size(p_field_size)
 {
 	m_field = new Object*[m_field_size.y];
 	for(int row = 0; row < m_field_size.y; row++)
@@ -39,7 +39,7 @@ void Field::place_food()
 		static std::uniform_int_distribution<std::mt19937::result_type> disty(0, m_field_size.y - 1);
 		static std::uniform_int_distribution<std::mt19937::result_type> distx(0, m_field_size.x - 1);
 
-		point new_food = {(int) disty(rng), (int) distx(rng)};
+		Point new_food = {(int) disty(rng), (int) distx(rng)};
 		if(m_field[new_food.y][new_food.x] == Object::empty)
 		{
 			m_field[new_food.y][new_food.x] = Object::food;
@@ -78,7 +78,7 @@ void Field::update_player(Player *p_player)
 
 	for(int i = 0; i < p_player->size(); ++i)
 	{
-		point player_point = p_player->get(i);
+		Point player_point = p_player->get(i);
 		m_field[player_point.y][player_point.x] = Object::player;
 	}
 }

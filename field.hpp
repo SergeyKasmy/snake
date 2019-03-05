@@ -3,13 +3,13 @@
 //#include "player.hpp"
 class Player;
 
-struct point
+struct Point
 {
 	int y;
 	int x;
 };
 
-inline bool operator==(const point& left, const point& right)
+inline bool operator==(const Point& left, const Point& right)
 {
 	return left.y == right.y &&
 		   left.x == right.x;
@@ -22,12 +22,12 @@ class Field
 	private:
 		Object **m_field;
 	public:
-		Field(point p_field_size);
+		Field(Point p_field_size);
 		~Field();
-		const point m_field_size;
+		const Point m_field_size;
 
-		Object get(point p_point) const {    return m_field[p_point.y][p_point.x]; }
-		void set(point p_point, Object p_object) {  m_field[p_point.y][p_point.x] = p_object;    }
+		Object get(Point p_point) const {    return m_field[p_point.y][p_point.x]; }
+		void set(Point p_point, Object p_object) {  m_field[p_point.y][p_point.x] = p_object;    }
 
 		void place_food();
 		void add_walls();

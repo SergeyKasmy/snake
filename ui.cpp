@@ -18,8 +18,8 @@ MainMenu::~MainMenu()
 
 void MainMenu::show()
 {
-	point item_new_game = {m_size_rows / 2, (int) (m_size_cols - strlen("New Game")) / 2};
-	point item_exit = {m_size_rows / 2 + 1, (int) (m_size_cols - strlen("Exit")) / 2};
+	Point item_new_game = {m_size_rows / 2, (int) (m_size_cols - strlen("New Game")) / 2};
+	Point item_exit = {m_size_rows / 2 + 1, (int) (m_size_cols - strlen("Exit")) / 2};
 
 	MenuItem selected_item = MenuItem::new_game;
 

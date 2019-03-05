@@ -16,7 +16,7 @@ class Game
 		void tick();
 		void update();
 	public:
-		Game(GameUI *p_ui, point p_field_size = {15, 25});
+		Game(GameUI *p_ui, Point p_field_size = {15, 25});
 		~Game();
 
 		int start();

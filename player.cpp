@@ -1,7 +1,7 @@
 #include <stdexcept>
 #include "player.hpp"
 
-void Player::move(point p_field_size)
+void Player::move(Point p_field_size)
 {
 	switch (facing)
 	{

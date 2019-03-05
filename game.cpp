@@ -28,7 +28,7 @@ void Game::tick()
 
 void Game::update()
 {
-	point player_head = m_player->get();
+	Point player_head = m_player->get();
 	switch(m_field->get(player_head))
 	{
 		case Object::food:
@@ -54,7 +54,7 @@ void Game::update()
 }
 
 
-Game::Game(GameUI *p_ui, point p_field_size) : m_ui(p_ui)
+Game::Game(GameUI *p_ui, Point p_field_size) : m_ui(p_ui)
 {
 	m_field = new Field(p_field_size);
 	m_player = new Player();
