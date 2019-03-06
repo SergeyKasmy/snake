@@ -39,7 +39,7 @@ void Player::move(Point p_field_size)
 		}
 		default:
 		{
-			throw std::invalid_argument("The player has wrong Facing");
+			throw std::invalid_argument("Player has wrong Facing");
 		}
 	}
 

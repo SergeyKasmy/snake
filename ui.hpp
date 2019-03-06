@@ -16,6 +16,7 @@ class MainMenu
 
 		void select(menu_item_t p_selected_item);
 		void new_game();
+		void show_settings();
 	public:
 		MainMenu();
 		~MainMenu();

@@ -3,7 +3,8 @@
 #include "game.hpp"
 #include "player.hpp"
 
-namespace MenuItem
+// MainMenuItem
+namespace MMItem
 {
 	const static menu_item_t new_game = 0;
 	const static menu_item_t settings = 1;
@@ -16,6 +17,16 @@ namespace MenuItem
 	const static int new_game_str_length = 8;
 	const static int settings_str_length = 8;
 	const static int exit_str_length = 4;
+}
+
+// SettingsItem
+namespace SItem
+{
+	const static menu_item_t enable_walls = 0;
+
+	const static char* const enable_walls_str = "Enable walls";
+
+	const static int enable_walls_str_length = 12;
 }
 
 struct GameExit : std::exception {};
@@ -42,11 +53,11 @@ void MainMenu::show()
 {
 	try
 	{
-		Point item_new_game = {m_size_rows / 2, (m_size_cols - MenuItem::new_game_str_length) / 2};
-		Point item_settings = {m_size_rows / 2 + 1, (m_size_cols - MenuItem::settings_str_length) / 2};
-		Point item_exit = {m_size_rows / 2 + 2, (m_size_cols - MenuItem::exit_str_length) / 2};
-		menu_item_t selected_item = MenuItem::new_game;
+		Point item_new_game = {m_size_rows / 2, (m_size_cols - MMItem::new_game_str_length) / 2};
+		Point item_settings = {m_size_rows / 2 + 1, (m_size_cols - MMItem::settings_str_length) / 2};
+		Point item_exit = {m_size_rows / 2 + 2, (m_size_cols - MMItem::exit_str_length) / 2};
 
+		menu_item_t selected_item = MMItem::new_game;
 		// holds the char input from the user
 		int ch;
 
@@ -54,21 +65,21 @@ void MainMenu::show()
 		{
 			mvprintw(m_size_rows / 4, (m_size_cols - 5) / 2, "Snake");
 
-			mvprintw(item_new_game.y, item_new_game.x, MenuItem::new_game_str);
-			mvprintw(item_settings.y, item_settings.x, MenuItem::settings_str);
-			mvprintw(item_exit.y, item_exit.x, MenuItem::exit_srt);
+			mvprintw(item_new_game.y, item_new_game.x, MMItem::new_game_str);
+			mvprintw(item_settings.y, item_settings.x, MMItem::settings_str);
+			mvprintw(item_exit.y, item_exit.x, MMItem::exit_srt);
 
 			// make the currently selected item bold
 			switch(selected_item)
 			{
-				case MenuItem::new_game:
-					mvchgat(item_new_game.y, item_new_game.x, MenuItem::new_game_str_length, A_BOLD, 0, NULL);
+				case MMItem::new_game:
+					mvchgat(item_new_game.y, item_new_game.x, MMItem::new_game_str_length, A_BOLD, 0, NULL);
 					break;
-				case MenuItem::settings:
-					mvchgat(item_settings.y, item_settings.x, MenuItem::settings_str_length, A_BOLD, 0, NULL);
+				case MMItem::settings:
+					mvchgat(item_settings.y, item_settings.x, MMItem::settings_str_length, A_BOLD, 0, NULL);
 					break;
-				case MenuItem::exit:
-					mvchgat(item_exit.y, item_exit.x, MenuItem::exit_str_length, A_BOLD, 0, NULL);
+				case MMItem::exit:
+					mvchgat(item_exit.y, item_exit.x, MMItem::exit_str_length, A_BOLD, 0, NULL);
 					break;
 			}
 			refresh();
@@ -76,12 +87,13 @@ void MainMenu::show()
 			switch(ch = getch())
 			{
 				case KEY_UP:
-					selected_item = selected_item != MenuItem::new_game ? selected_item - 1 : MenuItem::exit;
+					selected_item = selected_item != MMItem::new_game ? selected_item - 1 : MMItem::exit;
 					break;
 				case KEY_DOWN:
-					selected_item = selected_item != MenuItem::exit ? selected_item + 1 : MenuItem::new_game;
+					selected_item = selected_item != MMItem::exit ? selected_item + 1 : MMItem::new_game;
 					break;
 				case '\n':
+					erase();
 					select(selected_item);
 					erase();
 					break;
@@ -96,12 +108,13 @@ void MainMenu::select(menu_item_t p_selected_item)
 {
 	switch (p_selected_item)
 	{
-		case MenuItem::new_game:
+		case MMItem::new_game:
 			new_game();
 			break;
-		// TODO: implement settings menu
-		case MenuItem::settings:
-		case MenuItem::exit:
+		case MMItem::settings:
+			show_settings();
+			break;
+		case MMItem::exit:
 			throw GameExit();
 	}
 }
@@ -119,10 +132,53 @@ void MainMenu::new_game()
 	delete game_ui;
 }
 
+void MainMenu::show_settings()
+{
+	Point item_enable_walls = {m_size_rows / 2, (m_size_cols - SItem::enable_walls_str_length) / 2};
+
+	menu_item_t selected_item = SItem::enable_walls;
+	int ch;
+
+	while(true)
+	{
+		mvprintw(item_enable_walls.y, item_enable_walls.x, SItem::enable_walls_str);
+		refresh();
+
+		switch(selected_item)
+		{
+			case SItem::enable_walls:
+				mvchgat(item_enable_walls.y, item_enable_walls.x, SItem::enable_walls_str_length, A_BOLD, 0, NULL);
+				break;
+		}
+		refresh();
+
+			switch(ch = getch())
+			{
+				case KEY_UP:
+					selected_item = selected_item != SItem::enable_walls ? selected_item - 1 : SItem::enable_walls;
+					break;
+				case KEY_DOWN:
+					selected_item = selected_item != SItem::enable_walls ? selected_item + 1 : SItem::enable_walls;
+					break;
+				case '\n':
+					//erase();
+					//select(selected_item);
+					//erase();
+					break;
+				case 'q':
+				// ESC
+				case 27:
+					goto endloop;
+			}
+	}
+	endloop:
+	return;
+}
+
 GameUI::GameUI(WINDOW *p_win) : m_win(p_win)
 {
-	keypad(m_win, true);
 	nodelay(m_win, true);
+	keypad(m_win, true);
 }
 
 void GameUI::draw_static_elements()
