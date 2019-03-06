@@ -1,4 +1,3 @@
-#include <cstdio>
 #include "ui.hpp"
 
 int main()

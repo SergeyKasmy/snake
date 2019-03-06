@@ -2,8 +2,8 @@
 
 #include <ncurses.h>
 
-#include "field.hpp"
-#include "player.hpp"
+class Field;
+enum class Facing;
 
 using menu_item_t = int;
 

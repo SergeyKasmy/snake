@@ -1,8 +1,13 @@
 #include <chrono>
-#include <stdexcept>
+#include <exception>
 #include <unistd.h>
 
 #include "game.hpp"
+
+#include "player.hpp"
+#include "ui.hpp"
+
+struct GameEnd : std::exception {};
 
 void Game::tick()
 {

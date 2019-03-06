@@ -3,7 +3,7 @@
 #include <vector>
 #include "field.hpp"
 
-enum class Facing { right, down, left, up, null};
+enum class Facing { right, down, left, up, null };
 
 class Player
 {

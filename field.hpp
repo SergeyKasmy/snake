@@ -1,6 +1,5 @@
 #pragma once
 
-//#include "player.hpp"
 class Player;
 
 struct Point

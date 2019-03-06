@@ -1,5 +1,7 @@
-#include "game.hpp"
 #include "ui.hpp"
+
+#include "game.hpp"
+#include "player.hpp"
 
 namespace MenuItem
 {
@@ -97,6 +99,7 @@ void MainMenu::select(menu_item_t p_selected_item)
 		case MenuItem::new_game:
 			new_game();
 			break;
+		// TODO: implement settings menu
 		case MenuItem::settings:
 		case MenuItem::exit:
 			throw GameExit();
