@@ -108,7 +108,8 @@ void MainMenu::select(menu_item_t p_selected_item)
 
 void MainMenu::new_game()
 {
-	WINDOW *game_win = newwin(m_size_rows, m_size_cols, 0, 0);
+	erase();
+	WINDOW *game_win = newwin(FIELD_SIZE.y, FIELD_SIZE.x, (m_size_rows - FIELD_SIZE.y) / 2, (m_size_cols - FIELD_SIZE.x) / 2);
 	GameUI *game_ui = new GameUI(game_win);
 
 	Game game(game_ui);

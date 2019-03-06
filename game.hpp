@@ -5,6 +5,8 @@
 class GameUI;
 class Player;
 
+const static Point FIELD_SIZE = {18, 35};
+
 class Game
 {
 	private:
@@ -15,7 +17,7 @@ class Game
 		void tick();
 		void update();
 	public:
-		Game(GameUI *p_ui, Point p_field_size = {15, 25});
+		Game(GameUI *p_ui, Point p_field_size = FIELD_SIZE);
 		~Game();
 
 		int start();
