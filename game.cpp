@@ -5,6 +5,7 @@
 #include "game.hpp"
 
 #include "player.hpp"
+#include "settings.hpp"
 #include "ui.hpp"
 
 struct GameEnd : std::exception {};
@@ -60,9 +61,9 @@ void Game::update()
 }
 
 
-Game::Game(GameUI *p_ui, Point p_field_size) : m_ui(p_ui)
+Game::Game(GameUI *p_ui) : m_ui(p_ui)
 {
-	m_field = new Field(p_field_size);
+	m_field = new Field();
 	m_ui->set_field(m_field);
 
 	m_player = new Player();
@@ -76,7 +77,7 @@ Game::~Game()
 
 int Game::start()
 {
-	m_field->add_walls();
+	if(Settings::enable_walls) m_field->add_walls();
 	m_field->place_food();
 	m_ui->draw_static_elements();
 

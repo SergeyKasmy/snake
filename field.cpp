@@ -1,8 +1,9 @@
 #include <random>
 #include "field.hpp"
 #include "player.hpp"
+#include "settings.hpp"
 
-Field::Field(Point p_field_size) : m_field_size(p_field_size)
+Field::Field() : m_field_size(Settings::field_size)
 {
 	m_field = new Object*[m_field_size.y];
 	for(int row = 0; row < m_field_size.y; row++)

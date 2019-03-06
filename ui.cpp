@@ -2,6 +2,7 @@
 
 #include "game.hpp"
 #include "player.hpp"
+#include "settings.hpp"
 
 // MainMenuItem
 namespace MMItem
@@ -122,7 +123,7 @@ void MainMenu::select(menu_item_t p_selected_item)
 void MainMenu::new_game()
 {
 	erase();
-	WINDOW *game_win = newwin(FIELD_SIZE.y + FIELD_BEGIN_ROW, FIELD_SIZE.x, (m_size_rows - FIELD_SIZE.y) / 2, (m_size_cols - FIELD_SIZE.x) / 2);
+	WINDOW *game_win = newwin(Settings::field_size.y + FIELD_BEGIN_ROW, Settings::field_size.x, (m_size_rows - Settings::field_size.y) / 2, (m_size_cols - Settings::field_size.x) / 2);
 	GameUI *game_ui = new GameUI(game_win);
 
 	Game game(game_ui);
@@ -132,6 +133,9 @@ void MainMenu::new_game()
 	delete game_ui;
 }
 
+// TODO: use a single fucniton to display both main and settings menus to avoid code dublication
+// TODO: implement the ability to edit game settings
+// TODO: implement the ability to enter field size as numbers or with arrows
 void MainMenu::show_settings()
 {
 	Point item_enable_walls = {m_size_rows / 2, (m_size_cols - SItem::enable_walls_str_length) / 2};

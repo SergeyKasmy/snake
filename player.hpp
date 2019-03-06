@@ -14,7 +14,7 @@ class Player
 	public:
 		void move(Point p_field_size);
 		void lengthen() { m_length++; };
-		Point get(int p_at = 0) { return m_position.at(p_at); }
+		Point get(unsigned int p_at = 0) { return m_position.at(p_at); }
 
 		Facing get_facing() { return m_facing; }
 		void set_facing(Facing p_facing);

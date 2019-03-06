@@ -1,12 +1,8 @@
 #pragma once
 
-class Player;
+#include "point.h"
 
-struct Point
-{
-	int y;
-	int x;
-};
+class Player;
 
 inline bool operator==(const Point& left, const Point& right)
 {
@@ -21,7 +17,7 @@ class Field
 	private:
 		Object **m_field;
 	public:
-		Field(Point p_field_size);
+		Field();
 		~Field();
 		const Point m_field_size;
 
