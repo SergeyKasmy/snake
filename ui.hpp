@@ -28,11 +28,12 @@ class GameUI
 		WINDOW *m_win;
 		const Field *m_field;
 
-		void draw_field();
+		void update_field();
 	public:
 		GameUI(WINDOW *p_win);
 
 		void set_field(Field *p_field) { m_field = p_field; };
-		void draw(int score);
+		void draw_static_elements();
+		void update(int score);
 		Facing get_input();
 };

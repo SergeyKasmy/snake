@@ -125,46 +125,61 @@ GameUI::GameUI(WINDOW *p_win) : m_win(p_win)
 	nodelay(m_win, true);
 }
 
-void GameUI::draw(int score)
+void GameUI::draw_static_elements()
 {
-	mvwprintw(m_win, 0, 0, "Score: %d", score);
-	draw_field();
-}
-
-void GameUI::draw_field()
-{
-	wmove(m_win, 0 + FIELD_BEGIN_ROW, 0);
-
-	for(int row = 0; row < m_field->m_field_size.y; row++)
+	for(int row = 0; row < m_field->m_field_size.y; ++row)
 	{
-		for(int column = 0; column < m_field->m_field_size.x; column++)
+		for(int col = 0; col < m_field->m_field_size.x; ++col)
 		{
-			switch(m_field->get({row, column}))
+			switch (m_field->get({row, col}))
 			{
-				case Object::empty:
-					mvwaddch(m_win, row + FIELD_BEGIN_ROW, column, ' ');
-					break;
-				case Object::player:
-					mvwaddch(m_win, row + FIELD_BEGIN_ROW, column, '*');
-					break;
-				case Object::food:
-					mvwaddch(m_win, row + FIELD_BEGIN_ROW, column, '$');
-					break;
 				case Object::wall_horizontal:
-					mvwaddch(m_win, row + FIELD_BEGIN_ROW, column, '-');
+					mvwaddch(m_win, row + FIELD_BEGIN_ROW, col, '-');
 					break;
 				case Object::wall_vertical:
-					mvwaddch(m_win, row + FIELD_BEGIN_ROW, column, '|');
+					mvwaddch(m_win, row + FIELD_BEGIN_ROW, col, '|');
 					break;
 				case Object::corner:
-					mvwaddch(m_win, row + FIELD_BEGIN_ROW, column, '+');
+					mvwaddch(m_win, row + FIELD_BEGIN_ROW, col, '+');
+					break;
+				default:
 					break;
 			}
 		}
-		
-		wmove(m_win, row + FIELD_BEGIN_ROW + 1, 0);
 	}
+
 	refresh();
+}
+
+void GameUI::update(int score)
+{
+	mvwprintw(m_win, 0, 0, "Score: %d", score);
+	update_field();
+	refresh();
+}
+
+void GameUI::update_field()
+{
+	for(int row = 0; row < m_field->m_field_size.y; ++row)
+	{
+		for(int col = 0; col < m_field->m_field_size.x; ++col)
+		{
+			switch(m_field->get({row, col}))
+			{
+				case Object::empty:
+					mvwaddch(m_win, row + FIELD_BEGIN_ROW, col, ' ');
+					break;
+				case Object::player:
+					mvwaddch(m_win, row + FIELD_BEGIN_ROW, col, '*');
+					break;
+				case Object::food:
+					mvwaddch(m_win, row + FIELD_BEGIN_ROW, col, '$');
+					break;
+				default:
+					break;
+			}
+		}
+	}
 }
 
 Facing GameUI::get_input()

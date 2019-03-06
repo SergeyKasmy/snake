@@ -57,7 +57,7 @@ void Game::update()
 	
 	m_field->update_player(m_player);
 	m_player->move(m_field->m_field_size);
-	m_ui->draw(m_player->length() - 1);
+	m_ui->update(m_player->length() - 1);
 }
 
 
@@ -79,6 +79,7 @@ int Game::start()
 {
 	m_field->add_walls();
 	m_field->place_food();
+	m_ui->draw_static_elements();
 
 	try
 	{
