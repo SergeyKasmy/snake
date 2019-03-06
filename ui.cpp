@@ -126,15 +126,15 @@ GameUI::GameUI(WINDOW *p_win) : m_win(p_win)
 }
 
 
-void GameUI::display_field(Field *p_field)
+void GameUI::draw_field()
 {
 	wmove(m_win, 0, 0);
 
-	for(int row = 0; row < p_field->m_field_size.y; row++)
+	for(int row = 0; row < m_field->m_field_size.y; row++)
 	{
-		for(int column = 0; column < p_field->m_field_size.x; column++)
+		for(int column = 0; column < m_field->m_field_size.x; column++)
 		{
-			switch(p_field->get({row, column}))
+			switch(m_field->get({row, column}))
 			{
 				case Object::empty:
 					mvwaddch(m_win, row, column, ' ');

@@ -55,13 +55,15 @@ void Game::update()
 	
 	m_field->update_player(m_player);
 	m_player->move(m_field->m_field_size);
-	m_ui->display_field(m_field);
+	m_ui->draw_field();
 }
 
 
 Game::Game(GameUI *p_ui, Point p_field_size) : m_ui(p_ui)
 {
 	m_field = new Field(p_field_size);
+	m_ui->set_field(m_field);
+
 	m_player = new Player();
 }
 

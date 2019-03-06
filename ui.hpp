@@ -24,8 +24,11 @@ class GameUI
 {
 	private:
 		WINDOW *m_win;
+		const Field *m_field;
 	public:
 		GameUI(WINDOW *p_win);
-		void display_field(Field *p_field);
+		void set_field(Field *p_field) { m_field = p_field; };
+
+		void draw_field();
 		Facing get_input();
 };
