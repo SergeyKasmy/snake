@@ -145,13 +145,19 @@ void GameUI::draw_field()
 					mvwaddch(m_win, row + FIELD_BEGIN_ROW, column, ' ');
 					break;
 				case Object::player:
-					mvwaddch(m_win, row + FIELD_BEGIN_ROW, column, 'p');
+					mvwaddch(m_win, row + FIELD_BEGIN_ROW, column, '*');
 					break;
 				case Object::food:
-					mvwaddch(m_win, row + FIELD_BEGIN_ROW, column, 'f');
+					mvwaddch(m_win, row + FIELD_BEGIN_ROW, column, '$');
 					break;
-				case Object::wall:
-					mvwaddch(m_win, row + FIELD_BEGIN_ROW, column, 'w');
+				case Object::wall_horizontal:
+					mvwaddch(m_win, row + FIELD_BEGIN_ROW, column, '-');
+					break;
+				case Object::wall_vertical:
+					mvwaddch(m_win, row + FIELD_BEGIN_ROW, column, '|');
+					break;
+				case Object::corner:
+					mvwaddch(m_win, row + FIELD_BEGIN_ROW, column, '+');
 					break;
 			}
 		}
