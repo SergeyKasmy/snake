@@ -55,7 +55,7 @@ void Game::update()
 	
 	m_field->update_player(m_player);
 	m_player->move(m_field->m_field_size);
-	m_ui->draw_field();
+	m_ui->draw(m_player->length() - 1);
 }
 
 

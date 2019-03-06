@@ -109,7 +109,7 @@ void MainMenu::select(menu_item_t p_selected_item)
 void MainMenu::new_game()
 {
 	erase();
-	WINDOW *game_win = newwin(FIELD_SIZE.y, FIELD_SIZE.x, (m_size_rows - FIELD_SIZE.y) / 2, (m_size_cols - FIELD_SIZE.x) / 2);
+	WINDOW *game_win = newwin(FIELD_SIZE.y + FIELD_BEGIN_ROW, FIELD_SIZE.x, (m_size_rows - FIELD_SIZE.y) / 2, (m_size_cols - FIELD_SIZE.x) / 2);
 	GameUI *game_ui = new GameUI(game_win);
 
 	Game game(game_ui);
@@ -125,10 +125,15 @@ GameUI::GameUI(WINDOW *p_win) : m_win(p_win)
 	nodelay(m_win, true);
 }
 
+void GameUI::draw(int score)
+{
+	mvwprintw(m_win, 0, 0, "Score: %d", score);
+	draw_field();
+}
 
 void GameUI::draw_field()
 {
-	wmove(m_win, 0, 0);
+	wmove(m_win, 0 + FIELD_BEGIN_ROW, 0);
 
 	for(int row = 0; row < m_field->m_field_size.y; row++)
 	{
@@ -137,21 +142,21 @@ void GameUI::draw_field()
 			switch(m_field->get({row, column}))
 			{
 				case Object::empty:
-					mvwaddch(m_win, row, column, ' ');
+					mvwaddch(m_win, row + FIELD_BEGIN_ROW, column, ' ');
 					break;
 				case Object::player:
-					mvwaddch(m_win, row, column, 'p');
+					mvwaddch(m_win, row + FIELD_BEGIN_ROW, column, 'p');
 					break;
 				case Object::food:
-					mvwaddch(m_win, row, column, 'f');
+					mvwaddch(m_win, row + FIELD_BEGIN_ROW, column, 'f');
 					break;
 				case Object::wall:
-					mvwaddch(m_win, row, column, 'w');
+					mvwaddch(m_win, row + FIELD_BEGIN_ROW, column, 'w');
 					break;
 			}
 		}
 		
-		wmove(m_win, row+1, 0);
+		wmove(m_win, row + FIELD_BEGIN_ROW + 1, 0);
 	}
 	refresh();
 }
