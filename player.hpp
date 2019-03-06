@@ -10,11 +10,14 @@ class Player
 	private:
 		std::vector<Point> m_position {{5, 5}};
 		unsigned int m_length = 1;
+		Facing m_facing = Facing::right;
 	public:
-		Facing facing = Facing::right;
 		void move(Point p_field_size);
 		void lengthen() { m_length++; };
 		Point get(int p_at = 0) { return m_position.at(p_at); }
+
+		Facing get_facing() { return m_facing; }
+		void set_facing(Facing p_facing);
 
 		// returns the amount of Points the player occupies (costly!)
 		int size() { return m_position.size(); }

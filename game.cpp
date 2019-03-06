@@ -13,11 +13,10 @@ void Game::tick()
 {
 	const static std::chrono::milliseconds TICK_DURATION(225);
 	auto last_tick = std::chrono::high_resolution_clock::now();
-	Facing input;
 
 	while(true)
 	{
-		if((input = m_ui->get_input()) != Facing::null) m_player->facing = input;
+		m_player->set_facing(m_ui->get_input());
 		
 		// true if the time of the next tick(last tick + tick duration) is in the past
 		while((last_tick + TICK_DURATION) < std::chrono::high_resolution_clock::now())

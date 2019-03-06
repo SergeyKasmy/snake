@@ -3,7 +3,7 @@
 
 void Player::move(Point p_field_size)
 {
-	switch (facing)
+	switch (m_facing)
 	{
 		case Facing::right:
 		{
@@ -44,4 +44,25 @@ void Player::move(Point p_field_size)
 	}
 
 	if(m_position.size() > m_length) m_position.pop_back();
+}
+
+void Player::set_facing(Facing p_facing)
+{
+	switch (p_facing)
+	{
+		case Facing::right:
+			if(m_facing != Facing::left) m_facing = p_facing;
+			break;
+		case Facing::left:
+			if(m_facing != Facing::right) m_facing = p_facing;
+			break;
+		case Facing::down:
+			if(m_facing != Facing::up) m_facing = p_facing;
+			break;
+		case Facing::up:
+			if(m_facing != Facing::down) m_facing = p_facing;
+			break;
+		default:
+			break;
+	}
 }
