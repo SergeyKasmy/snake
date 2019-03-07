@@ -8,8 +8,6 @@
 #include "settings.hpp"
 #include "ui.hpp"
 
-struct GameEnd : std::exception {};
-
 void Game::tick()
 {
 	const static std::chrono::milliseconds TICK_DURATION(225);

@@ -5,6 +5,8 @@
 class GameUI;
 class Player;
 
+struct GameEnd : std::exception {};
+
 class Game
 {
 	private:

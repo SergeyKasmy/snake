@@ -100,7 +100,7 @@ void MainMenu::show_settings()
 									Settings::field_size = {25, 50};
 									break;
 								case 25:
-									Settings::field_size = {10, 15};
+									Settings::field_size = {10, 20};
 									break;
 								default:
 							 		Settings::field_size = {18, 35};
@@ -229,6 +229,10 @@ Facing GameUI::get_input()
 			return Facing::down;
 		case KEY_LEFT:
 			return Facing::left;
+		case 'q':
+		case 27:
+			throw GameEnd();
+			break;
 	}
 
 	return Facing::null;
