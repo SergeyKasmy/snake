@@ -18,5 +18,5 @@ class Game
 		Game(GameUI *p_ui);
 		~Game();
 
-		int start();
+		void start();
 };

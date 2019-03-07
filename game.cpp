@@ -74,7 +74,7 @@ Game::~Game()
 	delete m_player;
 }
 
-int Game::start()
+void Game::start()
 {
 	if(Settings::enable_walls) m_field->add_walls();
 	m_field->place_food();
@@ -84,10 +84,5 @@ int Game::start()
 	{
 		tick();
 	}
-	catch(const GameEnd &)
-	{
-		return 1;
-	}
-
-	return 0;
+	catch(const GameEnd &) {}
 }

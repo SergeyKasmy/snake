@@ -36,8 +36,8 @@ void Field::place_food()
 		// generate a seed from a random device in the system
 		rng.seed(std::random_device()());
 		// make a class to distribute the random numbers
-		static std::uniform_int_distribution<std::mt19937::result_type> disty(0, m_field_size.y - 1);
-		static std::uniform_int_distribution<std::mt19937::result_type> distx(0, m_field_size.x - 1);
+		std::uniform_int_distribution<std::mt19937::result_type> disty(0, m_field_size.y - 1);
+		std::uniform_int_distribution<std::mt19937::result_type> distx(0, m_field_size.x - 1);
 
 		Point new_food = {(int) disty(rng), (int) distx(rng)};
 		if(m_field[new_food.y][new_food.x] == Object::empty)
