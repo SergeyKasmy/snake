@@ -40,13 +40,10 @@ void MainMenu::display_menu(std::vector<MenuItem> &p_menu_items, Functor p_selec
 			switch(getch())
 			{
 				case KEY_UP:
-				{
-					int arr_size = p_menu_items.size();
-					selected_item = (((selected_item - 1) % arr_size) + arr_size) % arr_size;
+					selected_item = selected_item != 0 ? selected_item - 1 : p_menu_items.size() - 1;
 					break;
-				}
 				case KEY_DOWN:
-					selected_item = (selected_item + 1) % p_menu_items.size();
+					selected_item = selected_item != p_menu_items.size() - 1 ? selected_item + 1 : 0;
 					break;
 				case '\n':
 					is_selected = true;
