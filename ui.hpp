@@ -12,8 +12,6 @@ enum class Facing;
 
 using menu_item_t = int;
 
-const static int FIELD_BEGIN_ROW = 1;
-
 struct MenuItem
 {
 	std::string label;
@@ -38,12 +36,12 @@ class MainMenu
 class GameUI
 {
 	private:
-		WINDOW *m_win;
+		WINDOW *m_border_win, *m_field_win;
 		const Field *m_field;
 
 		void update_field();
 	public:
-		GameUI(WINDOW *p_win);
+		GameUI(WINDOW *p_border_win, WINDOW *p_field_win);
 
 		void set_field(Field *p_field) { m_field = p_field; };
 		void draw_static_elements();

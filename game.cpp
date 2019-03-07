@@ -44,9 +44,7 @@ void Game::update()
 			m_player->lengthen();
 			break;
 		}
-		case Object::wall_horizontal:
-		case Object::wall_vertical:
-		case Object::corner:
+		case Object::wall:
 		case Object::player:
 		{
 			throw GameEnd();

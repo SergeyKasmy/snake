@@ -29,8 +29,7 @@ Field::~Field()
 
 void Field::place_food()
 {
-	bool occupied = true;
-	while(occupied)
+	while(true)
 	{  
 		// pseudo-random number generator
 		static std::mt19937 rng;
@@ -44,7 +43,7 @@ void Field::place_food()
 		if(m_field[new_food.y][new_food.x] == Object::empty)
 		{
 			m_field[new_food.y][new_food.x] = Object::food;
-			occupied = false;
+			break;
 		}
 	}
 }
@@ -53,20 +52,15 @@ void Field::add_walls()
 {
 	for(int y = 0; y < m_field_size.y; y++)
 	{
-		m_field[y][0] = Object::wall_vertical;
-		m_field[y][m_field_size.x - 1] = Object::wall_vertical;
+		m_field[y][0] = Object::wall;
+		m_field[y][m_field_size.x - 1] = Object::wall;
 	}
 
 	for(int x = 0; x < m_field_size.x; x++)
 	{
-		m_field[0][x] = Object::wall_horizontal;
-		m_field[m_field_size.y - 1][x] = Object::wall_horizontal;
+		m_field[0][x] = Object::wall;
+		m_field[m_field_size.y - 1][x] = Object::wall;
 	}
-
-	m_field[0][0] = Object::corner;
-	m_field[0][m_field_size.x - 1] = Object::corner;
-	m_field[m_field_size.y - 1][0] = Object::corner;
-	m_field[m_field_size.y - 1][m_field_size.x - 1] = Object::corner;
 }
 
 void Field::update_player(Player *p_player)
