@@ -85,8 +85,8 @@ void MainMenu::new_game()
 void MainMenu::show_settings()
 {
 	std::vector<MenuItem> settings_menu_items = {{ 
+												{std::string("Field size: ") + std::to_string(Settings::field_size.y) + " rows, " + std::to_string(Settings::field_size.x) + " cols"},
 												{std::string("Walls: ") + bool_to_str(Settings::enable_walls), {} }, 
-												{"test", {} } 
 												}};
 	display_menu(settings_menu_items, 
 				[&settings_menu_items](menu_item_t p_selected_item) 
@@ -94,8 +94,23 @@ void MainMenu::show_settings()
 					switch (p_selected_item)
 					{
 						case 0:
+							switch(Settings::field_size.y) 
+							{
+								case 18:
+									Settings::field_size = {25, 50};
+									break;
+								case 25:
+									Settings::field_size = {10, 15};
+									break;
+								default:
+							 		Settings::field_size = {18, 35};
+									break;
+							}
+							settings_menu_items[0].label = std::string("Field size: ") + std::to_string(Settings::field_size.y) + " rows, " + std::to_string(Settings::field_size.x) + " cols";
+							break;
+						case 1:
 							Settings::enable_walls = !Settings::enable_walls;
-							settings_menu_items[0].label = std::string("Walls: ") + bool_to_str(Settings::enable_walls);
+							settings_menu_items[1].label = std::string("Walls: ") + bool_to_str(Settings::enable_walls);
 							break;
 						default:
 							break;
