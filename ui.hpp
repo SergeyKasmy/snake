@@ -26,7 +26,7 @@ class MainMenu
 		int m_size_rows, m_size_cols;
 
 		template<typename Functor>
-		void display_menu(std::vector<MenuItem> p_menu_items, Functor p_selected_item_handler, bool p_quit_with_q, std::string p_title = "Snake");
+		void display_menu(std::vector<MenuItem> &p_menu_items, Functor p_selected_item_handler, bool p_quit_with_q, std::string p_title = "Snake");
 		void new_game();
 		void show_settings();
 	public:

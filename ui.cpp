@@ -6,11 +6,12 @@
 
 struct GameExit : std::exception {};
 
+inline const char* const bool_to_str(bool b) { return b ? "enabled" : "disabled"; }
+
 // TODO: implement the ability to edit game settings
 // TODO: implement the ability to enter field size as numbers or with arrows
-// shows the main menu
 template<typename Functor>
-void MainMenu::display_menu(std::vector<MenuItem> p_menu_items, Functor p_selected_item_handler, bool p_quit_with_q, std::string p_title)
+void MainMenu::display_menu(std::vector<MenuItem> &p_menu_items, Functor p_selected_item_handler, bool p_quit_with_q, std::string p_title)
 {
 	for(int i = 0; i < p_menu_items.size(); ++i)
 	{
@@ -22,8 +23,6 @@ void MainMenu::display_menu(std::vector<MenuItem> p_menu_items, Functor p_select
 	{
 		erase();
 		menu_item_t selected_item = 0;
-		// holds the char input from the user
-		int ch;
 		bool is_selected = false;
 		while(true)
 		{
@@ -38,7 +37,7 @@ void MainMenu::display_menu(std::vector<MenuItem> p_menu_items, Functor p_select
 			mvchgat(p_menu_items[selected_item].pos.y, p_menu_items[selected_item].pos.x, p_menu_items[selected_item].label.length(), A_BOLD, 0, NULL);
 			refresh();
 
-			switch(ch = getch())
+			switch(getch())
 			{
 				case KEY_UP:
 				{
@@ -85,8 +84,24 @@ void MainMenu::new_game()
 
 void MainMenu::show_settings()
 {
-	const static std::vector<MenuItem> settings_menu_items = {{ {"Enable walls", {} }, {"Test", {} } }};
-	display_menu(settings_menu_items, [](menu_item_t p_selected_item) {}, true, "Settings");
+	std::vector<MenuItem> settings_menu_items = {{ 
+												{std::string("Walls: ") + bool_to_str(Settings::enable_walls), {} }, 
+												{"test", {} } 
+												}};
+	display_menu(settings_menu_items, 
+				[&settings_menu_items](menu_item_t p_selected_item) 
+				{
+					switch (p_selected_item)
+					{
+						case 0:
+							Settings::enable_walls = !Settings::enable_walls;
+							settings_menu_items[0].label = std::string("Walls: ") + bool_to_str(Settings::enable_walls);
+							break;
+						default:
+							break;
+					}
+				}, 
+				true, "Settings");
 }
 
 // sets up the main ui
@@ -108,11 +123,11 @@ MainMenu::~MainMenu()
 
 void MainMenu::show()
 {
-	const static std::vector<MenuItem> main_menu_items = {{ 
-														{"New Game", {} },
-														{"Settings", {} },
-														{"Exit", {} }
-														}};
+	std::vector<MenuItem> main_menu_items = {{ 
+											{"New Game", {} },
+											{"Settings", {} },
+											{"Exit", {} }
+											}};
 
 	display_menu(main_menu_items, 
 				[this](menu_item_t p_selected_item)
