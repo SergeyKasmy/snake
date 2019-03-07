@@ -36,10 +36,9 @@ void Game::update()
 	Point player_head = m_player->get();
 	switch(m_field->get(player_head))
 	{
-		// TODO: fix placing food in front of the player
 		case Object::food:
 		{
-			m_field->set(player_head, Object::empty);
+			m_field->set(player_head, Object::player);
 			m_field->place_food();
 			m_player->lengthen();
 			break;
