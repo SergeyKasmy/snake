@@ -36,7 +36,7 @@ void MainMenu::display_menu(std::vector<MenuItem> &p_menu_items, Functor p_selec
 			}
 
 			// make the currently selected item bold
-			mvchgat(p_menu_items[selected_item].pos.y, p_menu_items[selected_item].pos.x, p_menu_items[selected_item].label.length(), A_BOLD, 0, NULL);
+			mvchgat(p_menu_items[selected_item].pos.y, p_menu_items[selected_item].pos.x, p_menu_items[selected_item].label.length(), A_STANDOUT, 0, NULL);
 			refresh();
 
 			switch(getch())
@@ -274,7 +274,7 @@ int UIUtils::dialogbox(std::string p_text, std::vector<std::string> p_buttons)
 						p_buttons[i].c_str());
 		}
 
-		mvwchgat(win, 5, (win->_maxx / (p_buttons.size() + 1)) * (selected_item + 1) - (p_buttons[selected_item].length() / 2), p_buttons[selected_item].length(), A_BOLD, 0, NULL);
+		mvwchgat(win, 5, (win->_maxx / (p_buttons.size() + 1)) * (selected_item + 1) - (p_buttons[selected_item].length() / 2), p_buttons[selected_item].length(), A_STANDOUT, 0, NULL);
 
 		switch(wgetch(win))
 		{
