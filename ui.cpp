@@ -1,3 +1,5 @@
+#include <stdexcept>
+
 #include "ui.hpp"
 
 #include "game.hpp"
@@ -252,22 +254,42 @@ int UIUtils::dialogbox(std::string p_text, std::vector<std::string> p_buttons)
 							} () ? COLS - 4 : COLS / 3;
 
 	WINDOW *win = newwin(7, width, (LINES - 7) / 2, (COLS - (width)) / 2);
+	keypad(win, true);
 
 	box(win, 0, 0);
 	mvwprintw(win, 2, (win->_maxx - p_text.length()) / 2, p_text.c_str());
 
-	for(int i = 0; i < p_buttons.size(); ++i) 
-	{
-		// x = (total width of the window / (amount of buttons + 1)) * (current button + 1) - (length of the text of the button / 2)
-		mvwprintw(win,
-					5, 
-					(win->_maxx / (p_buttons.size() + 1)) * (i + 1) - (p_buttons[i].length() / 2),
-					p_buttons[i].c_str());
-	}
 
 	wrefresh(win);
-	wgetch(win);
-	delwin(win);
 
-	return 0;
+	int selected_item = 0;
+	while(true)
+	{
+		for(int i = 0; i < p_buttons.size(); ++i) 
+		{
+			// x = (total width of the window / (amount of buttons + 1)) * (current button + 1) - (length of the text of the button / 2)
+			mvwprintw(win,
+						5, 
+						(win->_maxx / (p_buttons.size() + 1)) * (i + 1) - (p_buttons[i].length() / 2),
+						p_buttons[i].c_str());
+		}
+
+		mvwchgat(win, 5, (win->_maxx / (p_buttons.size() + 1)) * (selected_item + 1) - (p_buttons[selected_item].length() / 2), p_buttons[selected_item].length(), A_BOLD, 0, NULL);
+
+		switch(wgetch(win))
+		{
+			case KEY_LEFT:
+				selected_item = selected_item != 0 ? selected_item - 1 : p_buttons.size() - 1;
+				break;
+			case KEY_RIGHT:
+				selected_item = selected_item != p_buttons.size() - 1 ? selected_item + 1 : 0;
+				break;
+			// Enter
+			case '\n':
+				delwin(win);
+				return selected_item;
+		}
+	}
+
+	throw std::logic_error("Out of the infinite while loop");
 }

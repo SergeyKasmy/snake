@@ -1,5 +1,7 @@
 #pragma once
 
+#include <exception>
+
 #include "field.hpp"
 
 class GameUI;

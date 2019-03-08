@@ -1,5 +1,4 @@
 #include <chrono>
-#include <exception>
 #include <unistd.h>
 
 #include "game.hpp"
