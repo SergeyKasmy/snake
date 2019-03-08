@@ -42,6 +42,7 @@ class GameUI
 		GameUI(WINDOW *p_border_win, WINDOW *p_field_win);
 
 		void set_field(Field *p_field) { m_field = p_field; };
+		void draw_border();
 		void draw_static_elements();
 		void update(int score);
 		Facing get_input();

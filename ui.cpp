@@ -166,10 +166,15 @@ void MainMenu::show()
 
 GameUI::GameUI(WINDOW *p_border_win, WINDOW *p_field_win) : m_border_win(p_border_win), m_field_win(p_field_win)
 {
-	box(m_border_win, 0, 0);
-	wrefresh(m_border_win);
+	draw_border();
 	nodelay(m_field_win, true);
 	keypad(m_field_win, true);
+}
+
+void GameUI::draw_border()
+{
+	box(m_border_win, 0, 0);
+	wrefresh(m_border_win);
 }
 
 void GameUI::draw_static_elements()
@@ -284,6 +289,8 @@ int UIUtils::dialogbox(std::string p_text, std::vector<std::string> p_buttons)
 				break;
 			// Enter
 			case '\n':
+				werase(win);
+				wrefresh(win);
 				delwin(win);
 				return selected_item;
 		}
