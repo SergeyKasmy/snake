@@ -239,14 +239,17 @@ Facing GameUI::get_input()
 
 int UIUtils::dialogbox(std::string p_text, std::vector<std::string> p_buttons)
 {
-	int min_width = 0;
-	for(std::string button : p_buttons)
-	{
-		min_width += button.length() + 2;
-	}
-	
-	min_width = (min_width > p_text.length() ? min_width : p_text.length()) + 4;
-	int width = COLS / 3 < min_width ? COLS - 4 : COLS / 3;
+	// if COLS / 3 < min_width(the width so that all elements would fit) -> width = COLS - 4, else width = COLS / 3
+	int width = COLS / 3 < [&p_text, &p_buttons]() -> int 
+							{
+								int min_width = 0;
+								for(std::string button : p_buttons)
+								{
+									min_width += button.length() + 2;
+								}
+								min_width = min_width > p_text.length() ? min_width : p_text.length();
+								return min_width;
+							} () ? COLS - 4 : COLS / 3;
 
 	WINDOW *win = newwin(7, width, (LINES - 7) / 2, (COLS - (width)) / 2);
 

@@ -83,6 +83,6 @@ void Game::start()
 	}
 	catch(const GameEnd &) 
 	{
-		UIUtils::dialogbox(std::string("Textyyyyyyyyyyyyyyyyyyyyyyyyy"), std::vector<std::string> {std::string("Button1"), std::string("Button2")});
+		UIUtils::dialogbox(std::string("Texty"), std::vector<std::string> {std::string("Button1"), std::string("Button2")});
 	}
 }
