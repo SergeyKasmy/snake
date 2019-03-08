@@ -15,10 +15,10 @@ inline const char* const bool_to_str(bool b) { return b ? "enabled" : "disabled"
 template<typename Functor>
 void MainMenu::display_menu(std::vector<MenuItem> &p_menu_items, Functor p_selected_item_handler, bool p_quit_with_q, std::string p_title)
 {
-	for(int i = 0; i < p_menu_items.size(); ++i)
+	for(std::size_t i = 0; i < p_menu_items.size(); ++i)
 	{
-		p_menu_items[i].pos = {LINES / 2 + i, 
-							(COLS - p_menu_items[i].label.length()) / 2};
+		p_menu_items[i].pos = {LINES / 2 + (int) i, 
+							(COLS - (int) p_menu_items[i].label.length()) / 2};
 	}
 
 	try
@@ -30,7 +30,7 @@ void MainMenu::display_menu(std::vector<MenuItem> &p_menu_items, Functor p_selec
 		{
 			mvprintw(LINES / 4, (COLS - p_title.length()) / 2, p_title.c_str());
 
-			for(int i = 0; i < p_menu_items.size(); ++i)
+			for(std::size_t i = 0; i < p_menu_items.size(); ++i)
 			{
 				mvprintw(p_menu_items[i].pos.y, p_menu_items[i].pos.x, p_menu_items[i].label.c_str());
 			}
@@ -45,7 +45,7 @@ void MainMenu::display_menu(std::vector<MenuItem> &p_menu_items, Functor p_selec
 					selected_item = selected_item != 0 ? selected_item - 1 : p_menu_items.size() - 1;
 					break;
 				case KEY_DOWN:
-					selected_item = selected_item != p_menu_items.size() - 1 ? selected_item + 1 : 0;
+					selected_item = selected_item != (int) p_menu_items.size() - 1 ? selected_item + 1 : 0;
 					break;
 				case '\n':
 					is_selected = true;
@@ -249,7 +249,7 @@ int UIUtils::dialogbox(std::string p_text, std::vector<std::string> p_buttons)
 								{
 									min_width += button.length() + 2;
 								}
-								min_width = min_width > p_text.length() ? min_width : p_text.length();
+								min_width = min_width > (int) p_text.length() ? min_width : p_text.length();
 								return min_width;
 							} () ? COLS - 4 : COLS / 3;
 
@@ -265,7 +265,7 @@ int UIUtils::dialogbox(std::string p_text, std::vector<std::string> p_buttons)
 	int selected_item = 0;
 	while(true)
 	{
-		for(int i = 0; i < p_buttons.size(); ++i) 
+		for(std::size_t i = 0; i < p_buttons.size(); ++i) 
 		{
 			// x = (total width of the window / (amount of buttons + 1)) * (current button + 1) - (length of the text of the button / 2)
 			mvwprintw(win,
@@ -282,7 +282,7 @@ int UIUtils::dialogbox(std::string p_text, std::vector<std::string> p_buttons)
 				selected_item = selected_item != 0 ? selected_item - 1 : p_buttons.size() - 1;
 				break;
 			case KEY_RIGHT:
-				selected_item = selected_item != p_buttons.size() - 1 ? selected_item + 1 : 0;
+				selected_item = selected_item != (int) p_buttons.size() - 1 ? selected_item + 1 : 0;
 				break;
 			// Enter
 			case '\n':
