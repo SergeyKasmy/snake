@@ -43,7 +43,7 @@ void Game::update()
 		case Object::wall:
 		case Object::player:
 		{
-			throw GameEnd();
+			throw GameEndDeath();
 			break;
 		}
 		default:
@@ -76,12 +76,21 @@ void Game::start()
 	m_field->place_food();
 	m_ui->draw_static_elements();
 
-	try
+	while(true)
 	{
-		tick();
-	}
-	catch(const GameEnd &) 
-	{
-		UIUtils::dialogbox(std::string("Texty"), std::vector<std::string> {std::string("Button1"), std::string("Button2")});
+		try
+		{
+			tick();
+		}
+		catch(const GameEndQuit &)
+		{
+			// TODO: redraw the field when "No" is clicked
+			if(UIUtils::dialogbox(std::string("Quit?"), std::vector<std::string> {std::string("No"), std::string("Yes")}) == 1) return;
+		}
+		catch(const GameEndDeath &) 
+		{
+			UIUtils::dialogbox(std::string("You died"), std::vector<std::string> {std::string("OK")});
+			return;
+		}
 	}
 }

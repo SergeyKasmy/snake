@@ -7,7 +7,8 @@
 class GameUI;
 class Player;
 
-struct GameEnd : std::exception {};
+struct GameEndDeath : std::exception {};
+struct GameEndQuit : std::exception {};
 
 class Game
 {

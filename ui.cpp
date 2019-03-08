@@ -232,7 +232,7 @@ Facing GameUI::get_input()
 			return Facing::left;
 		case 'q':
 		case 27:
-			throw GameEnd();
+			throw GameEndQuit();
 			break;
 	}
 
