@@ -15,8 +15,8 @@ void MainMenu::display_menu(std::vector<MenuItem> &p_menu_items, Functor p_selec
 {
 	for(int i = 0; i < p_menu_items.size(); ++i)
 	{
-		p_menu_items[i].pos = {m_size_rows / 2 + i, 
-							(m_size_cols - p_menu_items[i].label.length()) / 2};
+		p_menu_items[i].pos = {LINES / 2 + i, 
+							(COLS - p_menu_items[i].label.length()) / 2};
 	}
 
 	try
@@ -26,7 +26,7 @@ void MainMenu::display_menu(std::vector<MenuItem> &p_menu_items, Functor p_selec
 		bool is_selected = false;
 		while(true)
 		{
-			mvprintw(m_size_rows / 4, (m_size_cols - p_title.length()) / 2, p_title.c_str());
+			mvprintw(LINES / 4, (COLS - p_title.length()) / 2, p_title.c_str());
 
 			for(int i = 0; i < p_menu_items.size(); ++i)
 			{
@@ -70,8 +70,8 @@ void MainMenu::new_game()
 {
 	erase();
 	refresh();
-	WINDOW *game_win = newwin(Settings::field_size.y + 2, Settings::field_size.x + 2, (m_size_rows - Settings::field_size.y) / 2 - 1, (m_size_cols - Settings::field_size.x) / 2 - 1);
-	WINDOW *game_field_win = newwin(Settings::field_size.y, Settings::field_size.x, (m_size_rows - Settings::field_size.y) / 2, (m_size_cols - Settings::field_size.x) / 2);
+	WINDOW *game_win = newwin(Settings::field_size.y + 2, Settings::field_size.x + 2, (LINES - Settings::field_size.y) / 2 - 1, (COLS - Settings::field_size.x) / 2 - 1);
+	WINDOW *game_field_win = newwin(Settings::field_size.y, Settings::field_size.x, (LINES - Settings::field_size.y) / 2, (COLS - Settings::field_size.x) / 2);
 	GameUI *game_ui = new GameUI(game_win, game_field_win);
 
 	Game game(game_ui);
@@ -128,7 +128,6 @@ MainMenu::MainMenu()
 	curs_set(0);
 
 	keypad(stdscr, true);
-	getmaxyx(stdscr, m_size_rows, m_size_cols);
 }
 
 MainMenu::~MainMenu()
@@ -236,4 +235,36 @@ Facing GameUI::get_input()
 	}
 
 	return Facing::null;
+}
+
+int UIUtils::dialogbox(std::string p_text, std::vector<std::string> p_buttons)
+{
+	int min_width = 0;
+	for(std::string button : p_buttons)
+	{
+		min_width += button.length() + 2;
+	}
+	
+	min_width = (min_width > p_text.length() ? min_width : p_text.length()) + 4;
+	int width = COLS / 3 < min_width ? COLS - 4 : COLS / 3;
+
+	WINDOW *win = newwin(7, width, (LINES - 7) / 2, (COLS - (width)) / 2);
+
+	box(win, 0, 0);
+	mvwprintw(win, 2, (win->_maxx - p_text.length()) / 2, p_text.c_str());
+
+	for(int i = 0; i < p_buttons.size(); ++i) 
+	{
+		// x = (total width of the window / (amount of buttons + 1)) * (current button + 1) - (length of the text of the button / 2)
+		mvwprintw(win,
+					5, 
+					(win->_maxx / (p_buttons.size() + 1)) * (i + 1) - (p_buttons[i].length() / 2),
+					p_buttons[i].c_str());
+	}
+
+	wrefresh(win);
+	wgetch(win);
+	delwin(win);
+
+	return 0;
 }

@@ -81,5 +81,8 @@ void Game::start()
 	{
 		tick();
 	}
-	catch(const GameEnd &) {}
+	catch(const GameEnd &) 
+	{
+		UIUtils::dialogbox(std::string("Textyyyyyyyyyyyyyyyyyyyyyyyyy"), std::vector<std::string> {std::string("Button1"), std::string("Button2")});
+	}
 }

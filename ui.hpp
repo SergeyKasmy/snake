@@ -21,8 +21,6 @@ struct MenuItem
 class MainMenu
 {
 	private:
-		int m_size_rows, m_size_cols;
-
 		template<typename Functor>
 		void display_menu(std::vector<MenuItem> &p_menu_items, Functor p_selected_item_handler, bool p_quit_with_q, std::string p_title = "Snake");
 		void new_game();
@@ -47,4 +45,13 @@ class GameUI
 		void draw_static_elements();
 		void update(int score);
 		Facing get_input();
+
+};
+
+class UIUtils
+{
+	private:
+		UIUtils() {};
+	public:
+		static int dialogbox(std::string p_text, std::vector<std::string> p_buttons);
 };
