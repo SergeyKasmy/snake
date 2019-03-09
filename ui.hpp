@@ -5,7 +5,7 @@
 #include <string>
 #include <vector>
 
-#include "point.h"
+#include "point.hpp"
 
 class Field;
 enum class Facing;
