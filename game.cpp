@@ -9,7 +9,7 @@
 
 void Game::tick()
 {
-	const static std::chrono::milliseconds TICK_DURATION(225);
+	const static std::chrono::milliseconds TICK_DURATION(145);
 	auto last_tick = std::chrono::high_resolution_clock::now();
 
 	while(true)
