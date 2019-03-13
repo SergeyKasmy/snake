@@ -1,6 +1,6 @@
 #pragma once
 
-#include "point.hpp"
+class Point;
 
 class Settings
 {

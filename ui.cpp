@@ -2,6 +2,7 @@
 
 #include "ui.hpp"
 
+#include "field.hpp"
 #include "game.hpp"
 #include "player.hpp"
 #include "settings.hpp"

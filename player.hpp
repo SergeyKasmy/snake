@@ -1,7 +1,8 @@
 #pragma once
 
 #include <vector>
-#include "field.hpp"
+
+#include "point.hpp"
 
 enum class Facing { right, down, left, up, null };
 

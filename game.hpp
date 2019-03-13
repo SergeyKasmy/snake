@@ -2,8 +2,7 @@
 
 #include <exception>
 
-#include "field.hpp"
-
+class Field;
 class GameUI;
 class Player;
 
