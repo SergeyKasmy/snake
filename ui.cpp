@@ -245,7 +245,7 @@ Facing GameUI::get_input()
 	return Facing::null;
 }
 
-int UIUtils::dialogbox(std::string p_text, std::vector<std::string> p_buttons)
+menu_item_t UIUtils::dialogbox(std::string p_text, std::vector<std::string> p_buttons)
 {
 	// if COLS / 4 < min_width(the width so that all elements would fit) -> width = COLS - 4, else width = COLS / 4
 	int width = COLS / 4 < [&p_text, &p_buttons]() -> int 
@@ -266,7 +266,7 @@ int UIUtils::dialogbox(std::string p_text, std::vector<std::string> p_buttons)
 	mvwprintw(win, 2, (win->_maxx - p_text.length()) / 2, p_text.c_str());
 	wrefresh(win);
 
-	int selected_item = 0;
+	menu_item_t selected_item = 0;
 	while(true)
 	{
 		for(std::size_t i = 0; i < p_buttons.size(); ++i) 

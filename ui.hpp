@@ -54,5 +54,5 @@ class UIUtils
 	private:
 		UIUtils() {};
 	public:
-		static int dialogbox(std::string p_text, std::vector<std::string> p_buttons);
+		static menu_item_t dialogbox(std::string p_text, std::vector<std::string> p_buttons);
 };
