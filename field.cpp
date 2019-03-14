@@ -29,23 +29,15 @@ Field::~Field()
 
 void Field::place_food()
 {
-	while(true)
-	{  
-		// pseudo-random number generator
-		static std::mt19937 rng;
-		// generate a seed from a random device in the system
-		rng.seed(std::random_device()());
-		// make a class to distribute the random numbers
-		std::uniform_int_distribution<std::mt19937::result_type> disty(0, m_field_size.y - 1);
-		std::uniform_int_distribution<std::mt19937::result_type> distx(0, m_field_size.x - 1);
-
-		Point new_food = {(int) disty(rng), (int) distx(rng)};
-		if(m_field[new_food.y][new_food.x] == Object::empty)
-		{
-			m_field[new_food.y][new_food.x] = Object::food;
-			break;
-		}
-	}
+    static std::mt19937 rng(std::random_device{}());
+    std::uniform_int_distribution<int> disty(0, m_field_size.y - 1);
+    std::uniform_int_distribution<int> distx(0, m_field_size.x - 1);
+    Point location = {disty(rng), distx(rng)};
+    while(get(location) != Object::empty)
+    {  
+        location = {disty(rng), distx(rng)};
+    }
+    set(location, Object::food);
 }
 
 void Field::add_walls()
