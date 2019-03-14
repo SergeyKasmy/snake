@@ -52,7 +52,6 @@ void MainMenu::display_menu(std::vector<MenuItem> &p_menu_items, Functor p_selec
 					is_selected = true;
 					break;
 				case 'q':
-				case 27:
 					if(p_quit_with_q) throw GameExit();
 					break;
 			}
@@ -237,7 +236,6 @@ Facing GameUI::get_input()
 		case KEY_LEFT:
 			return Facing::left;
 		case 'q':
-		case 27:
 			throw GameEndQuit();
 			break;
 	}
