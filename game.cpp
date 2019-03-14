@@ -1,5 +1,5 @@
 #include <chrono>
-#include <unistd.h>
+#include <thread>
 
 #include "game.hpp"
 
@@ -10,23 +10,9 @@
 
 void Game::tick()
 {
-	const static std::chrono::milliseconds TICK_DURATION(145);
-	auto last_tick = std::chrono::high_resolution_clock::now();
-
-	while(true)
-	{
-		m_player->set_facing(m_ui->get_input());
-		
-		// true if the time of the next tick(last tick + tick duration) is in the past
-		while((last_tick + TICK_DURATION) < std::chrono::high_resolution_clock::now())
-		{
-			update();
-			last_tick += TICK_DURATION;
-		}
-
-		// sleep for 25 ms
-		usleep(25 * 1000);
-	}
+	m_player->set_facing(m_ui->get_input());
+    update();
+    std::this_thread::sleep_for(std::chrono::milliseconds(145));
 }
 
 void Game::update()
