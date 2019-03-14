@@ -80,7 +80,7 @@ void MainMenu::new_game()
 void MainMenu::show_settings()
 {
 	std::vector<MenuItem> settings_menu_items = {{ 
-												{std::string("Field size: ") + std::to_string(Settings::field_size.y) + " rows, " + std::to_string(Settings::field_size.x) + " cols"},
+												{std::string("Field size: ") + std::to_string(Settings::field_size.y) + " rows, " + std::to_string(Settings::field_size.x) + " cols", {}},
 												{std::string("Walls: ") + bool_to_str(Settings::enable_walls), {} }, 
 												}};
 	display_menu(settings_menu_items, 
