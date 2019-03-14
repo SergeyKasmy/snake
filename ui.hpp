@@ -39,12 +39,13 @@ class GameUI
 
 		void update_field();
 	public:
-		GameUI(WINDOW *p_border_win, WINDOW *p_field_win);
+		GameUI();
+		~GameUI();
 
 		void set_field(Field *p_field) { m_field = p_field; };
 		void draw_border();
 		void draw_static_elements();
-		void update(int score);
+		void update(int p_score);
 		Facing get_input();
 
 };

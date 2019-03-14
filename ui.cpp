@@ -73,15 +73,11 @@ void MainMenu::new_game()
 {
 	erase();
 	refresh();
-	WINDOW *game_win = newwin(Settings::field_size.y + 2, Settings::field_size.x + 2, (LINES - Settings::field_size.y) / 2 - 1, (COLS - Settings::field_size.x) / 2 - 1);
-	WINDOW *game_field_win = newwin(Settings::field_size.y, Settings::field_size.x, (LINES - Settings::field_size.y) / 2, (COLS - Settings::field_size.x) / 2);
-	GameUI *game_ui = new GameUI(game_win, game_field_win);
+	GameUI *game_ui = new GameUI();
 
 	Game game(game_ui);
 	game.start();
 
-	delwin(game_field_win);
-	delwin(game_win);
 	delete game_ui;
 }
 
@@ -165,11 +161,19 @@ void MainMenu::show()
 				}, false);
 }
 
-GameUI::GameUI(WINDOW *p_border_win, WINDOW *p_field_win) : m_border_win(p_border_win), m_field_win(p_field_win)
+GameUI::GameUI()
 {
+	m_border_win = newwin(Settings::field_size.y + 2, Settings::field_size.x + 2, (LINES - Settings::field_size.y) / 2 - 1, (COLS - Settings::field_size.x) / 2 - 1);
+	m_field_win = newwin(Settings::field_size.y, Settings::field_size.x, (LINES - Settings::field_size.y) / 2, (COLS - Settings::field_size.x) / 2);
 	draw_border();
 	nodelay(m_field_win, true);
 	keypad(m_field_win, true);
+}
+
+GameUI::~GameUI()
+{
+	delwin(m_field_win);
+	delwin(m_border_win);
 }
 
 void GameUI::draw_border()
@@ -191,9 +195,9 @@ void GameUI::draw_static_elements()
 	wrefresh(m_field_win);
 }
 
-void GameUI::update(int score)
+void GameUI::update(int p_score)
 {
-	mvwprintw(m_border_win, 0, 2, "Score: %d", score);
+	mvwprintw(m_border_win, 0, 2, "Score: %d", p_score);
 	wrefresh(m_border_win);
 	update_field();
 	wrefresh(m_field_win);
