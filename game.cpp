@@ -4,6 +4,7 @@
 #include "game.hpp"
 
 #include "field.hpp"
+#include "point.hpp"
 #include "player.hpp"
 #include "settings.hpp"
 #include "ui.hpp"

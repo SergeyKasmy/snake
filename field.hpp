@@ -4,12 +4,6 @@
 
 class Player;
 
-inline bool operator==(const Point& left, const Point& right)
-{
-	return left.y == right.y &&
-		   left.x == right.x;
-}
-
 enum class Object { empty, player, food, wall };
 
 class Field
