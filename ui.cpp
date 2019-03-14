@@ -9,7 +9,7 @@
 
 struct GameExit : std::exception {};
 
-inline const char* const bool_to_str(bool b) { return b ? "enabled" : "disabled"; }
+static const char* bool_to_str(bool b) { return b ? "enabled" : "disabled"; }
 
 // TODO: implement the ability to edit game settings
 // TODO: implement the ability to enter field size as numbers or with arrows
