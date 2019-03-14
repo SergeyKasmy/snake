@@ -2,8 +2,9 @@
 
 #include <exception>
 
+#include "ui.hpp"
+
 class Field;
-class GameUI;
 class Player;
 
 struct GameEndDeath : std::exception {};
@@ -12,14 +13,14 @@ struct GameEndQuit : std::exception {};
 class Game
 {
 	private:
-		GameUI *m_ui;
+		GameUI m_ui;
 		Field *m_field;
 		Player *m_player;
 
 		void tick();
 		void update();
 	public:
-		Game(GameUI *p_ui);
+		Game();
 		~Game();
 
 		void start();

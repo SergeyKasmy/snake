@@ -10,7 +10,7 @@
 
 void Game::tick()
 {
-	m_player->set_facing(m_ui->get_input());
+	m_player->set_facing(m_ui.get_input());
     update();
     std::this_thread::sleep_for(std::chrono::milliseconds(145));
 }
@@ -39,14 +39,14 @@ void Game::update()
 	
 	m_field->update_player(m_player);
 	m_player->move(m_field->m_field_size);
-	m_ui->update(m_player->length() - 1);
+	m_ui.update(m_player->length() - 1);
 }
 
 
-Game::Game(GameUI *p_ui) : m_ui(p_ui)
+Game::Game()
 {
 	m_field = new Field();
-	m_ui->set_field(m_field);
+	m_ui.set_field(m_field);
 
 	m_player = new Player();
 }
@@ -61,7 +61,7 @@ void Game::start()
 {
 	if(Settings::enable_walls) m_field->add_walls();
 	m_field->place_food();
-	m_ui->draw_static_elements();
+	m_ui.draw_static_elements();
 
 	while(true)
 	{
@@ -73,8 +73,8 @@ void Game::start()
 		{
 			// TODO: redraw the field when "No" is clicked
 			if(UIUtils::dialogbox(std::string("Quit?"), std::vector<std::string> {std::string("No"), std::string("Yes")}) == 1) return;
-			m_ui->draw_border();
-			m_ui->draw_static_elements();
+			m_ui.draw_border();
+			m_ui.draw_static_elements();
 		}
 		catch(const GameEndDeath &) 
 		{

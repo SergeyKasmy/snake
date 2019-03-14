@@ -73,12 +73,8 @@ void MainMenu::new_game()
 {
 	erase();
 	refresh();
-	GameUI *game_ui = new GameUI();
-
-	Game game(game_ui);
+	Game game;
 	game.start();
-
-	delete game_ui;
 }
 
 void MainMenu::show_settings()
