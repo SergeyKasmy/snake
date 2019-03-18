@@ -50,9 +50,7 @@ class GameUI
 
 };
 
-class UIUtils
+namespace UIUtils
 {
-	public:
-		UIUtils() = delete;
-		static menu_item_t dialogbox(std::string p_text, std::vector<std::string> p_buttons);
+	menu_item_t dialogbox(std::string p_text, std::vector<std::string> p_buttons);
 };
