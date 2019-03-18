@@ -1,10 +1,6 @@
 #pragma once
 
-#ifdef __unix__
-	#include <ncurses.h>
-#elif _WIN32
-	#include <pdcurses.h>
-#endif
+#include <curses.h>
 
 #include <string>
 #include <vector>
