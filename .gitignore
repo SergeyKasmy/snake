@@ -1,4 +1,2 @@
 .vscode/
-snake
-*.o
-.makefile.d
+build*
