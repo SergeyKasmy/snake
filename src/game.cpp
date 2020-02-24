@@ -74,13 +74,13 @@ void Game::start()
 		catch(const GameEndQuit &)
 		{
 			// TODO: redraw the field when "No" is clicked
-			if(UIUtils::dialogbox(std::string("Quit?"), std::vector<std::string> {std::string("No"), std::string("Yes")}) == 1) return;
+			if(Ui::dialogbox(std::string("Quit?"), std::vector<std::string> {std::string("No"), std::string("Yes")}) == 1) return;
 			m_ui->draw_border();
 			m_ui->draw_static_elements();
 		}
 		catch(const GameEndDeath &) 
 		{
-			UIUtils::dialogbox(std::string("You died"), std::vector<std::string> {std::string("OK")});
+			Ui::dialogbox(std::string("You died"), std::vector<std::string> {std::string("OK")});
 			return;
 		}
 	}

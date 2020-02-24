@@ -220,7 +220,7 @@ Facing GameUI::get_input()
 	return Facing::null;
 }
 
-menu_item_t UIUtils::dialogbox(std::string p_title, std::vector<std::string> p_buttons)
+menu_item_t Ui::dialogbox(std::string p_title, std::vector<std::string> p_buttons)
 {
 	// if COLS / 4 < min_width(the width so that all elements would fit) -> width = COLS - 4, else width = COLS / 4
 	int width = COLS / 4 < [&p_title, &p_buttons]() -> int 

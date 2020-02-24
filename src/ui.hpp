@@ -51,14 +51,9 @@ class GameUI
 
 };
 
-class UIUtils
-{
-	public:
-		static menu_item_t dialogbox(std::string p_title, std::vector<std::string> p_buttons);
-};
-
 class Ui
 {
 	public:
 		static void display_menu(std::vector<MenuItem> &p_menu_items, std::function<void(menu_item_t)> p_selected_item_handler, bool p_quit_with_q, std::string p_title = "Snake");
+		static menu_item_t dialogbox(std::string p_title, std::vector<std::string> p_buttons);
 };
