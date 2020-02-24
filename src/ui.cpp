@@ -7,6 +7,9 @@
 #include "player.hpp"
 #include "settings.hpp"
 
+
+#include "controller.hpp"
+
 struct GameExit : std::exception {};
 
 static const char* bool_to_str(bool b) { return b ? "enabled" : "disabled"; }
@@ -72,8 +75,6 @@ void MainMenu::new_game()
 {
 	erase();
 	refresh();
-	Game game;
-	game.start();
 }
 
 void MainMenu::show_settings()

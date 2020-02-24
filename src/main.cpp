@@ -1,4 +1,4 @@
-#include "ui.hpp"
+#include "controller.hpp"
 #include "settings.hpp"
 
 Point Settings::field_size = {18, 35};
@@ -6,7 +6,7 @@ bool Settings::enable_walls = false;
 
 int main()
 {
-	MainMenu main_menu;
-	main_menu.show();
+	Controller controller;
+	controller.start();
 	return 0;
 }
