@@ -11,7 +11,7 @@ void Controller::game_start()
 						{"Exit", {} }
 						}};
 
-	MainMenu::display_menu(main_menu_items, 
+	Ui::display_menu(main_menu_items, 
 				[this](menu_item_t p_selected_item)
 				{
 					switch(p_selected_item)

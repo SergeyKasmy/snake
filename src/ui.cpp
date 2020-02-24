@@ -16,7 +16,7 @@ static const char* bool_to_str(bool b) { return b ? "enabled" : "disabled"; }
 
 // TODO: implement the ability to edit game settings
 // TODO: implement the ability to enter field size as numbers or with arrows
-void MainMenu::display_menu(std::vector<MenuItem> &p_menu_items, std::function<void(menu_item_t)> p_selected_item_handler, bool p_quit_with_q, std::string p_title)
+void Ui::display_menu(std::vector<MenuItem> &p_menu_items, std::function<void(menu_item_t)> p_selected_item_handler, bool p_quit_with_q, std::string p_title)
 {
 	for(std::size_t i = 0; i < p_menu_items.size(); ++i)
 	{
@@ -82,7 +82,7 @@ void MainMenu::show_settings()
 												{std::string("Field size: ") + std::to_string(Settings::field_size.y) + " rows, " + std::to_string(Settings::field_size.x) + " cols", {}},
 												{std::string("Walls: ") + bool_to_str(Settings::enable_walls), {} }, 
 												}};
-	display_menu(settings_menu_items, 
+	Ui::display_menu(settings_menu_items, 
 				[&settings_menu_items](menu_item_t p_selected_item) 
 				{
 					switch (p_selected_item)
