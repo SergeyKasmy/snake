@@ -1,5 +1,6 @@
 #pragma once
 
+#include <functional>
 #include <curses.h>
 
 #include <string>
@@ -18,16 +19,17 @@ struct MenuItem
 	Point pos;
 };
 
+
 class MainMenu
 {
 	private:
-		template<typename Functor>
-		void display_menu(std::vector<MenuItem> &p_menu_items, Functor p_selected_item_handler, bool p_quit_with_q, std::string p_title = "Snake");
 		void show_settings();
 	public:
 		MainMenu();
 		~MainMenu();
 		void show();
+
+		static void display_menu(std::vector<MenuItem> &p_menu_items, std::function<void(menu_item_t)> p_selected_item_handler, bool p_quit_with_q, std::string p_title = "Snake");
 		void new_game();
 };
 
@@ -50,7 +52,8 @@ class GameUI
 
 };
 
-namespace UIUtils
+class UIUtils
 {
-	menu_item_t dialogbox(std::string p_text, std::vector<std::string> p_buttons);
+	public:
+		static menu_item_t dialogbox(std::string p_title, std::vector<std::string> p_buttons);
 };

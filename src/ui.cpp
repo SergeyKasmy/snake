@@ -16,8 +16,7 @@ static const char* bool_to_str(bool b) { return b ? "enabled" : "disabled"; }
 
 // TODO: implement the ability to edit game settings
 // TODO: implement the ability to enter field size as numbers or with arrows
-template<typename Functor>
-void MainMenu::display_menu(std::vector<MenuItem> &p_menu_items, Functor p_selected_item_handler, bool p_quit_with_q, std::string p_title)
+void MainMenu::display_menu(std::vector<MenuItem> &p_menu_items, std::function<void(menu_item_t)> p_selected_item_handler, bool p_quit_with_q, std::string p_title)
 {
 	for(std::size_t i = 0; i < p_menu_items.size(); ++i)
 	{
@@ -132,29 +131,6 @@ MainMenu::~MainMenu()
 
 void MainMenu::show()
 {
-	std::vector<MenuItem> main_menu_items = {{ 
-											{"New Game", {} },
-											{"Settings", {} },
-											{"Exit", {} }
-											}};
-
-	display_menu(main_menu_items, 
-				[this](menu_item_t p_selected_item)
-				{
-					switch(p_selected_item)
-					{
-						// New Game
-						case 0:
-							new_game();
-							break;
-						// Settings
-						case 1:
-							show_settings();
-							break;
-						case 2:
-							throw GameExit();
-					}
-				}, false);
 }
 
 GameUI::GameUI()
@@ -244,17 +220,17 @@ Facing GameUI::get_input()
 	return Facing::null;
 }
 
-menu_item_t UIUtils::dialogbox(std::string p_text, std::vector<std::string> p_buttons)
+menu_item_t UIUtils::dialogbox(std::string p_title, std::vector<std::string> p_buttons)
 {
 	// if COLS / 4 < min_width(the width so that all elements would fit) -> width = COLS - 4, else width = COLS / 4
-	int width = COLS / 4 < [&p_text, &p_buttons]() -> int 
+	int width = COLS / 4 < [&p_title, &p_buttons]() -> int 
 							{
 								int min_width = 0;
 								for(std::string button : p_buttons)
 								{
 									min_width += button.length() + 2;
 								}
-								min_width = min_width > (int) p_text.length() ? min_width : p_text.length();
+								min_width = min_width > (int) p_title.length() ? min_width : p_title.length();
 								return min_width + 10;
 							} () ? COLS - 10 : COLS / 4;
 
@@ -262,7 +238,7 @@ menu_item_t UIUtils::dialogbox(std::string p_text, std::vector<std::string> p_bu
 	keypad(win, true);
 
 	box(win, 0, 0);
-	mvwprintw(win, 2, (win->_maxx - p_text.length()) / 2, p_text.c_str());
+	mvwprintw(win, 2, (win->_maxx - p_title.length()) / 2, p_title.c_str());
 	wrefresh(win);
 
 	menu_item_t selected_item = 0;

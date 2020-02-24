@@ -12,5 +12,5 @@ class Controller
 
 	public:
 		Controller() : m_game(&m_ui) {}
-		void start();
+		void game_start();
 };
