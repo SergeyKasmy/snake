@@ -16,7 +16,7 @@ static const char* bool_to_str(bool b) { return b ? "enabled" : "disabled"; }
 
 // TODO: implement the ability to edit game settings
 // TODO: implement the ability to enter field size as numbers or with arrows
-void Ui::display_menu(std::vector<MenuItem> &p_menu_items, std::function<void(menu_item_t)> p_selected_item_handler, bool p_quit_with_q, std::string p_title)
+void Ui::display_menu(std::vector<MenuItem> &p_menu_items, std::function<void(int)> p_selected_item_handler, bool p_quit_with_q, std::string p_title)
 {
 	for(std::size_t i = 0; i < p_menu_items.size(); ++i)
 	{
@@ -27,7 +27,7 @@ void Ui::display_menu(std::vector<MenuItem> &p_menu_items, std::function<void(me
 	try
 	{
 		erase();
-		menu_item_t selected_item = 0;
+		int selected_item = 0;
 		bool is_selected = false;
 		while(true)
 		{
@@ -83,7 +83,7 @@ void MainMenu::show_settings()
 												{std::string("Walls: ") + bool_to_str(Settings::enable_walls), {} }, 
 												}};
 	Ui::display_menu(settings_menu_items, 
-				[&settings_menu_items](menu_item_t p_selected_item) 
+				[&settings_menu_items](int p_selected_item) 
 				{
 					switch (p_selected_item)
 					{
@@ -220,7 +220,7 @@ Facing GameUI::get_input()
 	return Facing::null;
 }
 
-menu_item_t Ui::dialogbox(std::string p_title, std::vector<std::string> p_buttons)
+int Ui::dialogbox(std::string p_title, std::vector<std::string> p_buttons)
 {
 	// if COLS / 4 < min_width(the width so that all elements would fit) -> width = COLS - 4, else width = COLS / 4
 	int width = COLS / 4 < [&p_title, &p_buttons]() -> int 
@@ -241,7 +241,7 @@ menu_item_t Ui::dialogbox(std::string p_title, std::vector<std::string> p_button
 	mvwprintw(win, 2, (win->_maxx - p_title.length()) / 2, p_title.c_str());
 	wrefresh(win);
 
-	menu_item_t selected_item = 0;
+	int selected_item = 0;
 	while(true)
 	{
 		for(std::size_t i = 0; i < p_buttons.size(); ++i) 

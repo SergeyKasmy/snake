@@ -12,7 +12,7 @@ void Controller::game_start()
 						}};
 
 	Ui::display_menu(main_menu_items, 
-				[this](menu_item_t p_selected_item)
+				[this](int p_selected_item)
 				{
 					switch(p_selected_item)
 					{
