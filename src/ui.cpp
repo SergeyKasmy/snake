@@ -16,12 +16,13 @@ static const char* bool_to_str(bool b) { return b ? "enabled" : "disabled"; }
 
 // TODO: implement the ability to edit game settings
 // TODO: implement the ability to enter field size as numbers or with arrows
-void Ui::display_menu(std::vector<MenuItem> &p_menu_items, std::function<void(int)> p_selected_item_handler, bool p_quit_with_q, std::string p_title)
+int Ui::display_menu(std::vector<std::string> &p_menu_items, bool p_quit_with_q, std::string p_title)
 {
+	std::vector<Point> item_positions(p_menu_items.size());
 	for(std::size_t i = 0; i < p_menu_items.size(); ++i)
 	{
-		p_menu_items[i].pos = {LINES / 2 + (int) i, 
-							(COLS - (int) p_menu_items[i].label.length()) / 2};
+		item_positions[i] = {LINES / 2 + (int) i, 
+							(COLS - (int) p_menu_items[i].length()) / 2};
 	}
 
 	try
@@ -35,11 +36,11 @@ void Ui::display_menu(std::vector<MenuItem> &p_menu_items, std::function<void(in
 
 			for(std::size_t i = 0; i < p_menu_items.size(); ++i)
 			{
-				mvprintw(p_menu_items[i].pos.y, p_menu_items[i].pos.x, p_menu_items[i].label.c_str());
+				mvprintw(item_positions[i].y, item_positions[i].x, p_menu_items[i].c_str());
 			}
 
 			// make the currently selected item bold
-			mvchgat(p_menu_items[selected_item].pos.y, p_menu_items[selected_item].pos.x, p_menu_items[selected_item].label.length(), A_STANDOUT, 0, NULL);
+			mvchgat(item_positions[selected_item].y, item_positions[selected_item].x, p_menu_items[selected_item].length(), A_STANDOUT, 0, NULL);
 			refresh();
 
 			switch(getch())
@@ -60,14 +61,15 @@ void Ui::display_menu(std::vector<MenuItem> &p_menu_items, std::function<void(in
 
 			if(is_selected) 
 			{
-				p_selected_item_handler(selected_item);
-				is_selected = false;
 				erase();
+				return selected_item;
 			}
 		}
 	}
 	// exit the game, if it's called for an exit
 	catch(const GameExit &) {}
+
+	return -1;
 }
 
 void MainMenu::new_game()
@@ -78,39 +80,34 @@ void MainMenu::new_game()
 
 void MainMenu::show_settings()
 {
-	std::vector<MenuItem> settings_menu_items = {{ 
-												{std::string("Field size: ") + std::to_string(Settings::field_size.y) + " rows, " + std::to_string(Settings::field_size.x) + " cols", {}},
-												{std::string("Walls: ") + bool_to_str(Settings::enable_walls), {} }, 
-												}};
-	Ui::display_menu(settings_menu_items, 
-				[&settings_menu_items](int p_selected_item) 
-				{
-					switch (p_selected_item)
-					{
-						case 0:
-							switch(Settings::field_size.y) 
-							{
-								case 18:
-									Settings::field_size = {25, 50};
-									break;
-								case 25:
-									Settings::field_size = {10, 20};
-									break;
-								default:
-							 		Settings::field_size = {18, 35};
-									break;
-							}
-							settings_menu_items[0].label = std::string("Field size: ") + std::to_string(Settings::field_size.y) + " rows, " + std::to_string(Settings::field_size.x) + " cols";
-							break;
-						case 1:
-							Settings::enable_walls = !Settings::enable_walls;
-							settings_menu_items[1].label = std::string("Walls: ") + bool_to_str(Settings::enable_walls);
-							break;
-						default:
-							break;
-					}
-				}, 
-				true, "Settings");
+	std::vector<std::string> settings_menu_items = {{ 
+							std::string("Field size: ") + std::to_string(Settings::field_size.y) + " rows, " + std::to_string(Settings::field_size.x) + " cols",
+							std::string("Walls: ") + bool_to_str(Settings::enable_walls) 
+							}};
+	switch (Ui::display_menu(settings_menu_items, true, "Settings"))
+	{
+		case 0:
+			switch(Settings::field_size.y) 
+			{
+				case 18:
+					Settings::field_size = {25, 50};
+					break;
+				case 25:
+					Settings::field_size = {10, 20};
+					break;
+				default:
+			 		Settings::field_size = {18, 35};
+					break;
+			}
+			settings_menu_items[0] = std::string("Field size: ") + std::to_string(Settings::field_size.y) + " rows, " + std::to_string(Settings::field_size.x) + " cols";
+			break;
+		case 1:
+			Settings::enable_walls = !Settings::enable_walls;
+			settings_menu_items[1] = std::string("Walls: ") + bool_to_str(Settings::enable_walls);
+			break;
+		default:
+			break;
+	}
 }
 
 // sets up the main ui

@@ -11,12 +11,6 @@
 class Field;
 enum class Facing;
 
-struct MenuItem
-{
-	std::string label;
-	Point pos;
-};
-
 
 class MainMenu
 {
@@ -52,6 +46,6 @@ class GameUI
 class Ui
 {
 	public:
-		static void display_menu(std::vector<MenuItem> &p_menu_items, std::function<void(int)> p_selected_item_handler, bool p_quit_with_q, std::string p_title = "Snake");
+		static int display_menu(std::vector<std::string> &p_menu_items, bool p_quit_with_q, std::string p_title = "Snake");
 		static int dialogbox(std::string p_title, std::vector<std::string> p_buttons);
 };

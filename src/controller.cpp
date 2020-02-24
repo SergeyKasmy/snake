@@ -4,29 +4,19 @@
 
 void Controller::game_start()
 {
-	MainMenu mm;
-	std::vector<MenuItem> main_menu_items = {{ 
-						{"New Game", {} },
-						{"Settings", {} },
-						{"Exit", {} }
-						}};
+	std::vector<std::string> main_menu_items = {{"New Game",
+						"Settings",
+						"Exit"}};
 
-	Ui::display_menu(main_menu_items, 
-				[this](int p_selected_item)
-				{
-					switch(p_selected_item)
-					{
-						// New Game
-						case 0:
-							m_menu.new_game();
-							m_game.start();
-							break;
-						// Settings
-						case 1:
-							break;
-						case 2:
-							//throw GameExit();
-							break;
-					}
-				}, true);
+	switch(Ui::display_menu(main_menu_items, true))
+	{
+		case 0:
+			m_menu.new_game();
+			m_game.start();
+		case -1:
+			return;
+		default:
+			//TODO
+			break;
+	}
 }
