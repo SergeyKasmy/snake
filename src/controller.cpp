@@ -2,7 +2,7 @@
 
 #include "ui.hpp"
 
-void Controller::game_start()
+void Controller::start()
 {
 	std::vector<std::string> main_menu_items = {{"New Game",
 						"Settings",

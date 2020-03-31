@@ -7,6 +7,6 @@ bool Settings::enable_walls = false;
 int main()
 {
 	Controller controller;
-	controller.game_start();
+	controller.start();
 	return 0;
 }

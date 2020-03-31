@@ -12,3 +12,4 @@ add_executable(${PROJECT_NAME} ${SOURCES})
 target_link_libraries(snake ${CURSES_LIBRARIES})
 
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+set(CMAKE_BUILD_TYPE "Debug")
