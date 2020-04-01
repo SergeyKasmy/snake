@@ -1,9 +1,9 @@
-#include <stdexcept>
+//#include <stdexcept>
+#include <cassert>
 
 #include "ui.hpp"
 
 #include "field.hpp"
-#include "game.hpp"
 #include "player.hpp"
 #include "settings.hpp"
 
@@ -72,12 +72,13 @@ int Ui::display_menu(std::vector<std::string> &p_menu_items, bool p_quit_with_q,
 	return -1;
 }
 
-void MainMenu::new_game()
+void GameUi::game_start()
 {
 	erase();
 	refresh();
 }
 
+/*
 void MainMenu::show_settings()
 {
 	std::vector<std::string> settings_menu_items = {{ 
@@ -109,9 +110,9 @@ void MainMenu::show_settings()
 			break;
 	}
 }
+*/
 
-// sets up the main ui
-MainMenu::MainMenu()
+Ui::Ui()
 {
 	initscr();
 	cbreak();
@@ -121,37 +122,35 @@ MainMenu::MainMenu()
 	keypad(stdscr, true);
 }
 
-MainMenu::~MainMenu()
+Ui::~Ui()
 {
 	endwin();
 }
 
-void MainMenu::show()
-{
-}
-
-GameUI::GameUI()
+GameUi::GameUi()
 {
 	m_border_win = newwin(Settings::field_size.y + 2, Settings::field_size.x + 2, (LINES - Settings::field_size.y) / 2 - 1, (COLS - Settings::field_size.x) / 2 - 1);
 	m_field_win = newwin(Settings::field_size.y, Settings::field_size.x, (LINES - Settings::field_size.y) / 2, (COLS - Settings::field_size.x) / 2);
+	assert(m_border_win != 0);
+	assert(m_border_win != 0);
 	draw_border();
 	nodelay(m_field_win, true);
 	keypad(m_field_win, true);
 }
 
-GameUI::~GameUI()
+GameUi::~GameUi()
 {
 	delwin(m_field_win);
 	delwin(m_border_win);
 }
 
-void GameUI::draw_border()
+void GameUi::draw_border()
 {
 	box(m_border_win, 0, 0);
 	wrefresh(m_border_win);
 }
 
-void GameUI::draw_static_elements()
+void GameUi::draw_static_elements()
 {
 	for(int row = 0; row < m_field->m_field_size.y; ++row)
 	{
@@ -164,7 +163,7 @@ void GameUI::draw_static_elements()
 	wrefresh(m_field_win);
 }
 
-void GameUI::update(int p_score)
+void GameUi::update(int p_score)
 {
 	mvwprintw(m_border_win, 0, 2, "Score: %d", p_score);
 	wrefresh(m_border_win);
@@ -172,7 +171,7 @@ void GameUI::update(int p_score)
 	wrefresh(m_field_win);
 }
 
-void GameUI::update_field()
+void GameUi::update_field()
 {
 	for(int row = 0; row < m_field->m_field_size.y; ++row)
 	{
@@ -196,7 +195,7 @@ void GameUI::update_field()
 	}
 }
 
-Facing GameUI::get_input()
+Facing GameUi::get_input()
 {
 	int input = wgetch(m_field_win);
 	switch (input)
@@ -210,7 +209,7 @@ Facing GameUI::get_input()
 		case KEY_LEFT:
 			return Facing::left;
 		case 'q':
-			throw GameEndQuit();
+			//throw GameEndQuit();
 			break;
 	}
 

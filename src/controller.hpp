@@ -1,16 +1,17 @@
 #pragma once
 
-#include "game.hpp"
 #include "ui.hpp"
+#include "player.hpp"
+#include "field.hpp"
 
 class Controller
 {
 	private:
-		MainMenu m_menu;
-		GameUI m_ui;
-		Game m_game;
-
+		GameUi *m_ui = nullptr;
+		Player m_player;
+		Field m_field;
+		void new_game();
+		int tick();
 	public:
-		Controller() : m_game(&m_ui) {}
 		void start();
 };

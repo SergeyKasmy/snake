@@ -20,11 +20,9 @@ class MainMenu
 		MainMenu();
 		~MainMenu();
 		void show();
-
-		void new_game();
 };
 
-class GameUI
+class GameUi
 {
 	private:
 		WINDOW *m_border_win, *m_field_win;
@@ -32,20 +30,23 @@ class GameUI
 
 		void update_field();
 	public:
-		GameUI();
-		~GameUI();
+		GameUi();
+		~GameUi();
 
 		void set_field(Field *p_field) { m_field = p_field; };
 		void draw_border();
-		void draw_static_elements();
 		void update(int p_score);
 		Facing get_input();
 
+		void game_start();	// prepare the ui for a new game
+		void draw_static_elements();
 };
 
 class Ui
 {
 	public:
-		static int display_menu(std::vector<std::string> &p_menu_items, bool p_quit_with_q, std::string p_title = "Snake");
-		static int dialogbox(std::string p_title, std::vector<std::string> p_buttons);
+		Ui();
+		~Ui();
+		int display_menu(std::vector<std::string> &p_menu_items, bool p_quit_with_q, std::string p_title = "Snake");
+		int dialogbox(std::string p_title, std::vector<std::string> p_buttons);
 };
