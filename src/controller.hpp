@@ -7,9 +7,9 @@
 class Controller
 {
 	private:
-		GameUi *m_ui = nullptr;
-		Player m_player;
-		Field m_field;
+		Ui m_ui;
+		Player *m_player = nullptr;
+		Field *m_field = nullptr;
 		void new_game();
 		int tick();
 	public:

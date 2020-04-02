@@ -10,10 +10,6 @@
 
 #include "controller.hpp"
 
-struct GameExit : std::exception {};
-
-static const char* bool_to_str(bool b) { return b ? "enabled" : "disabled"; }
-
 // TODO: implement the ability to edit game settings
 // TODO: implement the ability to enter field size as numbers or with arrows
 int Ui::display_menu(std::vector<std::string> &p_menu_items, bool p_quit_with_q, std::string p_title)
@@ -72,45 +68,28 @@ int Ui::display_menu(std::vector<std::string> &p_menu_items, bool p_quit_with_q,
 	return -1;
 }
 
-void GameUi::game_start()
+
+void Ui::game_start(Field &p_field)
 {
 	erase();
 	refresh();
+	m_border_win = newwin(Settings::field_size.y + 2, Settings::field_size.x + 2, (LINES - Settings::field_size.y) / 2 - 1, (COLS - Settings::field_size.x) / 2 - 1);
+	m_field_win = newwin(Settings::field_size.y, Settings::field_size.x, (LINES - Settings::field_size.y) / 2, (COLS - Settings::field_size.x) / 2);
+	assert(m_border_win != 0);
+	assert(m_border_win != 0);
+	box(m_border_win, 0, 0);
+	wrefresh(m_border_win);
+	nodelay(m_field_win, true);
+	keypad(m_field_win, true);
+	draw_static_elements(p_field);
 }
 
-/*
-void MainMenu::show_settings()
+void Ui::game_end()
 {
-	std::vector<std::string> settings_menu_items = {{ 
-							std::string("Field size: ") + std::to_string(Settings::field_size.y) + " rows, " + std::to_string(Settings::field_size.x) + " cols",
-							std::string("Walls: ") + bool_to_str(Settings::enable_walls) 
-							}};
-	switch (Ui::display_menu(settings_menu_items, true, "Settings"))
-	{
-		case 0:
-			switch(Settings::field_size.y) 
-			{
-				case 18:
-					Settings::field_size = {25, 50};
-					break;
-				case 25:
-					Settings::field_size = {10, 20};
-					break;
-				default:
-			 		Settings::field_size = {18, 35};
-					break;
-			}
-			settings_menu_items[0] = std::string("Field size: ") + std::to_string(Settings::field_size.y) + " rows, " + std::to_string(Settings::field_size.x) + " cols";
-			break;
-		case 1:
-			Settings::enable_walls = !Settings::enable_walls;
-			settings_menu_items[1] = std::string("Walls: ") + bool_to_str(Settings::enable_walls);
-			break;
-		default:
-			break;
-	}
+	delwin(m_field_win);
+	delwin(m_border_win);
 }
-*/
+
 
 Ui::Ui()
 {
@@ -127,57 +106,28 @@ Ui::~Ui()
 	endwin();
 }
 
-GameUi::GameUi()
+void Ui::draw_static_elements(const Field &p_field)
 {
-	m_border_win = newwin(Settings::field_size.y + 2, Settings::field_size.x + 2, (LINES - Settings::field_size.y) / 2 - 1, (COLS - Settings::field_size.x) / 2 - 1);
-	m_field_win = newwin(Settings::field_size.y, Settings::field_size.x, (LINES - Settings::field_size.y) / 2, (COLS - Settings::field_size.x) / 2);
-	assert(m_border_win != 0);
-	assert(m_border_win != 0);
-	draw_border();
-	nodelay(m_field_win, true);
-	keypad(m_field_win, true);
-}
-
-GameUi::~GameUi()
-{
-	delwin(m_field_win);
-	delwin(m_border_win);
-}
-
-void GameUi::draw_border()
-{
-	box(m_border_win, 0, 0);
-	wrefresh(m_border_win);
-}
-
-void GameUi::draw_static_elements()
-{
-	for(int row = 0; row < m_field->m_field_size.y; ++row)
+	for(int row = 0; row < p_field.m_field_size.y; ++row)
 	{
-		for(int col = 0; col < m_field->m_field_size.x; ++col)
+		for(int col = 0; col < p_field.m_field_size.x; ++col)
 		{
-			if(m_field->get({row, col}) == Object::wall) mvwaddch(m_field_win, row , col, '#');
+			if(p_field.get({row, col}) == Object::wall) mvwaddch(m_field_win, row , col, '#');
 		}
 	}
 
 	wrefresh(m_field_win);
 }
 
-void GameUi::update(int p_score)
+void Ui::update(const Field &p_field, int p_score)
 {
 	mvwprintw(m_border_win, 0, 2, "Score: %d", p_score);
 	wrefresh(m_border_win);
-	update_field();
-	wrefresh(m_field_win);
-}
-
-void GameUi::update_field()
-{
-	for(int row = 0; row < m_field->m_field_size.y; ++row)
+	for(int row = 0; row < p_field.m_field_size.y; ++row)
 	{
-		for(int col = 0; col < m_field->m_field_size.x; ++col)
+		for(int col = 0; col < p_field.m_field_size.x; ++col)
 		{
-			switch(m_field->get({row, col}))
+			switch(p_field.get({row, col}))
 			{
 				case Object::empty:
 					mvwaddch(m_field_win, row , col, ' ');
@@ -193,9 +143,10 @@ void GameUi::update_field()
 			}
 		}
 	}
+	wrefresh(m_field_win);
 }
 
-Facing GameUi::get_input()
+Facing Ui::get_input()
 {
 	int input = wgetch(m_field_win);
 	switch (input)
@@ -209,7 +160,7 @@ Facing GameUi::get_input()
 		case KEY_LEFT:
 			return Facing::left;
 		case 'q':
-			//throw GameEndQuit();
+			throw GameEndQuit();
 			break;
 	}
 
