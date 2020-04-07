@@ -76,7 +76,7 @@ void Ui::game_start(Field &p_field)
 	m_border_win = newwin(Settings::field_size.y + 2, Settings::field_size.x + 2, (LINES - Settings::field_size.y) / 2 - 1, (COLS - Settings::field_size.x) / 2 - 1);
 	m_field_win = newwin(Settings::field_size.y, Settings::field_size.x, (LINES - Settings::field_size.y) / 2, (COLS - Settings::field_size.x) / 2);
 	assert(m_border_win != 0);
-	assert(m_border_win != 0);
+	assert(m_field_win != 0);
 	box(m_border_win, 0, 0);
 	wrefresh(m_border_win);
 	nodelay(m_field_win, true);
@@ -97,7 +97,6 @@ Ui::Ui()
 	cbreak();
 	noecho();
 	curs_set(0);
-
 	keypad(stdscr, true);
 }
 
